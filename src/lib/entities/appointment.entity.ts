@@ -1,17 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { UUID } from 'crypto';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity()
+@Entity('appointment')
 export class AppointmentEntity {
-  @PrimaryGeneratedColumn()
-  appointmentId: number;
+  @PrimaryGeneratedColumn('uuid')
+  appointmentId: UUID;
 
   @Column()
-  doctorId: number;
+  userId:UUID;
 
   @Column()
-  patientId: number;
+  doctorId: UUID;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column()
+  patientId: UUID;
+
+  @CreateDateColumn()
   createDate: Date;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })

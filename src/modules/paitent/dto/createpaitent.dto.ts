@@ -1,12 +1,16 @@
-import { IsNotEmpty, IsOptional, IsEmail, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsEmail, IsBoolean, IsString, IsPhoneNumber, IsUUID } from 'class-validator';
+import { UUID } from 'crypto';
 
 export class CreatePatientDto {
 
-    @IsNotEmpty()
+    @IsString()
     name: string;
 
-    @IsNotEmpty()
+   @IsPhoneNumber()
     phoneNumber: string;
+
+    @IsUUID()
+    userId:UUID
 
     @IsOptional()
     @IsEmail()
