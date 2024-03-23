@@ -13,4 +13,12 @@ export class RoleService {
       throw err;
     }
   }
+
+  async findByName(name: string) {
+    try {
+      return this.roleRepository.findByName(name);
+    } catch (err) {
+      throw err;
+    }
+  }
 }

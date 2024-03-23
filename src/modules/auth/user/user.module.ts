@@ -6,9 +6,10 @@ import { User } from "src/lib/entities/user.entity";
 import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 import { UserRepository } from "./user.repository";
+import { UserRoleModule } from "../userRole/userRole.module";
 
 @Module({
-    imports:[ TypeOrmModule.forFeature([User])],
+    imports:[ TypeOrmModule.forFeature([User]),UserRoleModule],
     controllers:[UserController],
     providers:[UserService,UserRepository]
 })

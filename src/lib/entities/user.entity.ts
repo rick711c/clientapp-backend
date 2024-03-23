@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { UserRoles } from '../enums';
 
 @Entity()
 export class User {
@@ -12,14 +11,17 @@ export class User {
     @Column()
     enPassword: string;
 
+    @Column()
+    firstName: string;
+
+    @Column()
+    lastName: string;
+
     @Column({ nullable: true })
     phoneNumber: string;
 
     @Column()
     email: string;
-
-    @Column({default:UserRoles.CUSTOMER})
-    roles: string;
 
     @CreateDateColumn()
     createDate: Date;
