@@ -1,13 +1,13 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AppointmentEntity } from 'src/lib/entities/appointment.entity';
+import { Appointment } from 'src/lib/entities/appointment.entity';
 import { Repository } from 'typeorm';
 import { CreateAppointmentDto } from './dto/createAppointment.dto';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
 
 export class AppointmentRepository {
   constructor(
-    @InjectRepository(AppointmentEntity)
-    private readonly repo: Repository<AppointmentEntity>,
+    @InjectRepository(Appointment)
+    private readonly repo: Repository<Appointment>,
   ) {}
 
   async createAppointment(createAppointmentDto: CreateAppointmentDto) {

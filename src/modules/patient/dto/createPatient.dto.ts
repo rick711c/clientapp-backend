@@ -10,7 +10,7 @@ export class CreatePatientDto {
     phoneNumber: string;
 
     @IsUUID()
-    userId:UUID
+    createdBy:UUID
 
     @IsOptional()
     @IsEmail()

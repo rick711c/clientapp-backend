@@ -4,13 +4,13 @@ import { UUID } from 'crypto';
 export class CreateAppointmentDto {
 
   @IsInt()
-  userId:UUID;
-  
-  @IsInt()
   doctorId: UUID;
 
   @IsInt()
   patientId: UUID;
+
+  @IsInt()
+  createdBy:UUID;
 
   @IsDate()
   @IsOptional()

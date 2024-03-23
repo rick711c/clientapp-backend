@@ -1,16 +1,24 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AppointmentEntity } from './lib/entities/appointment.entity';
+import { Appointment } from './lib/entities/appointment.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dbconfig } from './config/dbconfig';
+import { dbConfig } from './config/dbConfig';
 import { AppointmentModule } from './modules/appointment/appointment.module';
-import { PatinetModule } from './modules/paitent/paitent.module';
+import { PatientModule } from './modules/patient/patient.module';
+import { UserModule } from './modules/auth/user/user.module';
+import { UserRoleModule } from './modules/auth/userRole/userRole.module';
+import { RoleModule } from './modules/auth/role/role.module';
 
 @Module({
-  imports: [AppointmentModule,PatinetModule,
-    TypeOrmModule.forRoot({...dbconfig}),
-    ],
+  imports: [
+    AppointmentModule,
+    PatientModule,
+    UserModule,
+    UserRoleModule,
+    RoleModule,
+    TypeOrmModule.forRoot({ ...dbConfig }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

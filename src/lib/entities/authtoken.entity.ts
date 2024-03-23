@@ -1,26 +1,22 @@
-import { UUID } from 'crypto';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
 @Entity()
 export class Token {
-    @PrimaryGeneratedColumn('uuid')
-    tokenId: number;
+  @PrimaryGeneratedColumn('uuid')
+  tokenId: string;
 
-    @Column()
-    userId: UUID;
+  @Column()
+  userId: string;
 
-    @Column()
-    accessToken: string;
+  @Column()
+  token: string;
 
-    @Column()
-    refreshToken: string;
+  @Column({ type: 'enum', enum: ['access', 'refresh'] })
+  tokenType: string;
 
-    @CreateDateColumn()
-    accessTokenCreatedAt: Date;
+  @CreateDateColumn()
+  createdDate: Date;
 
-    @Column()
-    accessTokenExpiresAt: Date;
-
-    @Column()
-    refreshTokenExpiresAt: Date;
+  @Column({ type: 'datetime' })
+  expireDate: Date;
 }

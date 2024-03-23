@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { UserRoles } from '../enums';
 
 @Entity()
 export class User {
@@ -9,18 +10,24 @@ export class User {
     username: string;
 
     @Column()
-    encryptedPassword: string;
+    enPassword: string;
 
-    @Column({ type: 'varchar', length: 20, nullable: true })
+    @Column({ nullable: true })
     phoneNumber: string;
 
     @Column()
     email: string;
+
+    @Column({default:UserRoles.CUSTOMER})
+    roles: string;
 
     @CreateDateColumn()
     createDate: Date;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     modifyDate: Date;
+
+    @Column({default:true})
+    isActive: boolean;
 }
  

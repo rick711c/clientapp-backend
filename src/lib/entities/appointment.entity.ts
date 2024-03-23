@@ -2,12 +2,12 @@ import { UUID } from 'crypto';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
 @Entity('appointment')
-export class AppointmentEntity {
+export class Appointment {
   @PrimaryGeneratedColumn('uuid')
   appointmentId: UUID;
 
   @Column()
-  userId:UUID;
+  createdBy:UUID;
 
   @Column()
   doctorId: UUID;

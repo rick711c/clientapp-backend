@@ -7,18 +7,15 @@ import {
 } from 'typeorm';
 
 @Entity('patient')
-export class PatientEntity {
+export class Patient {
   @PrimaryGeneratedColumn('uuid')
   patientId: UUID;
 
   @Column()
-  userId: UUID;
+  createdBy: UUID;
 
   @Column()
   name: string;
-
-  @CreateDateColumn()
-  accessTokenCreatedAt: Date;
 
   @Column({
     type: 'timestamp',
