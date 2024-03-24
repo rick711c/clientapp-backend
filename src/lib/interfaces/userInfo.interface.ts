@@ -1,6 +1,8 @@
+import { UUID } from "crypto";
+
 //from the currentUser () decorator , we will recive userInfo, which is same as an object of this class.
 export interface UserInfo {
-    userId: string;
+    userId: UUID;
     username: string;
     firstName: string;
     lastName: string;

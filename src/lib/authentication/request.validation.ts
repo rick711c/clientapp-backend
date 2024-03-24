@@ -5,9 +5,7 @@ import { TokenService } from 'src/modules/auth/authToken/token.service';
 
 export class RequestValidation {
     constructor(
-        @Inject(TokenService)
         private readonly tokenService: TokenService
-      
     ){}
   async validate(header: any) {
     const authHeader = header.authorization;

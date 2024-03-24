@@ -24,7 +24,7 @@ export class AppointmentController {
     @CurrentUser() user: UserInfo,
   ) {
     try {
-      return this.service.createAppointment(createAppointmentDto);
+      return this.service.createAppointment(createAppointmentDto,user);
     } catch (e) {
       throw e;
     }

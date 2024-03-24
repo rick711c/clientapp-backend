@@ -12,13 +12,13 @@ import { TokenService } from 'src/modules/auth/authToken/token.service';
 export class AuthGuard implements CanActivate {
   @Inject(TokenService)
   private tokenService: TokenService;
-  canActivate(
+  async canActivate(
     context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  ): Promise<boolean>  {
     const header = context.switchToHttp().getRequest().headers;
     try {
       const requestValidator = new RequestValidation(this.tokenService);
-      const user = requestValidator.validate(header);
+      const user = await requestValidator.validate(header);
       if (user) {
         header.userInfo = user;
         return true;

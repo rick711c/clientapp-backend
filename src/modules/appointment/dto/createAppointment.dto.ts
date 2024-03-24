@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsIn, IsInt, IsOptional } from 'class-validator';
+import { IsBoolean, IsDate, IsIn, IsInt, IsOptional, IsUUID } from 'class-validator';
 import { UUID } from 'crypto';
 
 export class CreateAppointmentDto {
@@ -9,7 +9,7 @@ export class CreateAppointmentDto {
   @IsInt()
   patientId: UUID;
 
-  @IsInt()
+  @IsUUID()
   createdBy:UUID;
 
   @IsDate()
