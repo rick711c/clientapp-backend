@@ -10,6 +10,8 @@ import { UserModule } from './modules/auth/user/user.module';
 import { UserRoleModule } from './modules/auth/userRole/userRole.module';
 import { RoleModule } from './modules/auth/role/role.module';
 import { TokenModule } from './modules/auth/authToken/token.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guards/authentication.guard';
 
 @Module({
   imports: [
@@ -22,6 +24,12 @@ import { TokenModule } from './modules/auth/authToken/token.module';
     TypeOrmModule.forRoot({ ...dbConfig }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard, 
+    },
+  ],
 })
 export class AppModule {}

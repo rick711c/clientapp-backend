@@ -16,5 +16,6 @@ export const dbConfig: TypeOrmModuleOptions = {
   password: 'reactgod@123',
   database: 'scrum_management',
   entities: [Appointment, Patient, User, UserRole, Role,AccessToken,RefreshToken],
-  synchronize: true,
+  synchronize: false,
+  logging: true
 };

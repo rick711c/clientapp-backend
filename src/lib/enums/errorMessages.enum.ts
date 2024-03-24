@@ -3,4 +3,5 @@ export enum ErrorMessages{
     WRONG_PASSWORD = 'wrong password',
     USER_ROLE_ALREADY_EXIST = 'user with same role already exists',
     INVALID_TOKEN = 'invalid token',
+    FORBIDDEN = 'forbidden',
 }
