@@ -52,9 +52,10 @@ export class UserRoleService {
        const roleIds = await this.userRoleRepository.getUserRoles(userId);
        let allRoles: any[] = [];
         for(let i=0; i<roleIds.length; i++){
-            const roleDetails = await this.roleService.findByName(roleIds[i].roleId);
+            const roleDetails = await this.roleService.findById(roleIds[i].roleId);
             allRoles.push(roleDetails);
         }
+        console.log(allRoles);
         return allRoles;
     }catch (err) {
         throw err;

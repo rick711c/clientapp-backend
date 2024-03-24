@@ -46,4 +46,17 @@ export class UserRepository {
       throw err;
     }
   }
+
+  async getUserIdsByUsername(username: string) {
+    try {
+      const res = await this.repository
+        .createQueryBuilder()
+        .select('userId')
+        .where('username = :username', { username: username })
+        .getRawOne();
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

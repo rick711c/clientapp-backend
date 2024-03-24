@@ -7,10 +7,12 @@ import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 import { UserRepository } from "./user.repository";
 import { UserRoleModule } from "../userRole/userRole.module";
+import { UtilService } from "src/lib/utils/util.service";
+import { TokenModule } from "../authToken/token.module";
 
 @Module({
-    imports:[ TypeOrmModule.forFeature([User]),UserRoleModule],
+    imports:[ TypeOrmModule.forFeature([User]),UserRoleModule,TokenModule],
     controllers:[UserController],
-    providers:[UserService,UserRepository]
+    providers:[UserService,UserRepository,UtilService]
 })
 export class UserModule {}

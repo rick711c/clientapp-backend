@@ -31,4 +31,18 @@ export class RoleRepository {
       throw err;
     }
   }
+
+
+  async findById(roleId: string) {
+    try {
+      const roleDetails = await this.repository
+        .createQueryBuilder()
+        .select('*')
+        .where('roleId = :roleId', { roleId })
+        .getRawOne();
+        return roleDetails;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

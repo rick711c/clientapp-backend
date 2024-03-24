@@ -9,6 +9,7 @@ import { PatientModule } from './modules/patient/patient.module';
 import { UserModule } from './modules/auth/user/user.module';
 import { UserRoleModule } from './modules/auth/userRole/userRole.module';
 import { RoleModule } from './modules/auth/role/role.module';
+import { TokenModule } from './modules/auth/authToken/token.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RoleModule } from './modules/auth/role/role.module';
     UserModule,
     UserRoleModule,
     RoleModule,
+    TokenModule,
     TypeOrmModule.forRoot({ ...dbConfig }),
   ],
   controllers: [AppController],
