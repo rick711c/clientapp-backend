@@ -31,8 +31,10 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.2",
+    "nexmo": "^2.9.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
+    "speakeasy": "^2.0.0",
     "typeorm": "^0.3.20"
   },
   "devDependencies": {

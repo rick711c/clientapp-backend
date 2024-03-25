@@ -2,13 +2,16 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/cerateUser.dto';
 import { LoginDto } from './dto/login.dto';
+import { Public } from 'src/decorators/public.decorator';
 
 @Controller('/user')
+
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Public()
   @Post('/')
-  async createPa(@Body() createUserDto: CreateUserDto) {
+  async registerUser(@Body() createUserDto: CreateUserDto) {
     try {
       return this.userService.registerUser(createUserDto);
     } catch (e) {
@@ -25,6 +28,7 @@ export class UserController {
     }
   }
 
+  @Public()
   @Post('/login')
   async login(@Body() credentials: LoginDto) {
     try {

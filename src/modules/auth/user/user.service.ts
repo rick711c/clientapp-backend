@@ -9,6 +9,7 @@ import { UtilService } from 'src/lib/utils/util.service';
 import { TokenService } from '../authToken/token.service';
 import { UserRole } from 'src/lib/entities/userRole.entity';
 import { UserRolesEnum } from 'src/lib/enums';
+import { Public } from 'src/decorators/public.decorator';
 
 @Injectable()
 export class UserService {
@@ -74,6 +75,7 @@ export class UserService {
     }
   }
 
+  
   async login(credentials: LoginDto) {
     try {
       const userDetails = await this.validateUser(credentials);
