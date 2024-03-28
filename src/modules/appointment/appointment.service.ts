@@ -2,14 +2,13 @@ import { CreateAppointmentDto } from './dto/createAppointment.dto';
 import { AppointmentRepository } from './appointment.repository';
 import { Injectable } from '@nestjs/common';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
-import { UserInfo } from 'src/lib/interfaces/userInfo.interface';
 
 
 @Injectable()
 export class AppointmentService {
   constructor(private readonly repo: AppointmentRepository) {}
 
-  async createAppointment(createAppointmentDto: CreateAppointmentDto, user:UserInfo) {
+  async createAppointment(createAppointmentDto: CreateAppointmentDto, user:any) {
     try {
       createAppointmentDto.createdBy = user.userId;
       return this.repo.createAppointment(createAppointmentDto);

@@ -38,7 +38,7 @@ export class TokenRepository {
         .select('UserId')
         .where('UserId = :UserId', { userId })
         .andWhere('token = :token', { token: refreshToken })
-        .andWhere('expireDate <= :currentDate', { currentDate: new Date() })
+        .andWhere('expireDate >= :currentDate', { currentDate: new Date() })
         .getRawOne();
       return res;
     } catch (err) {

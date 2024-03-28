@@ -10,6 +10,7 @@ export class CreateUserDto {
     @IsString()
     enPassword: string;
 
+    @IsOptional()
     @IsString()
     password: string;
 
@@ -22,10 +23,16 @@ export class CreateUserDto {
     @IsString()
     phoneNumber: string;
 
+    @IsOptional()
     @IsEmail()
     email: string;
 
     @IsOptional()
     @IsEnum(UserRolesEnum)
     role:string
+
+    constructor(){
+        this.firstName = 'Guest';
+        this.lastName = '';
+    }
 }

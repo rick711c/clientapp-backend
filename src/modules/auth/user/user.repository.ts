@@ -2,6 +2,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/lib/entities/user.entity';
 import { CreateUserDto } from './dto/cerateUser.dto';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { ErrorMessages } from 'src/lib/enums/errorMessages.enum';
 
 export class UserRepository {
   constructor(
@@ -13,7 +15,7 @@ export class UserRepository {
     try {
       const newUser = this.repository.create(createUserDto);
       let res = await this.repository.save(newUser);
-      const {enPassword,...user}=res;
+      const { enPassword, ...user } = res;
       return res;
     } catch (err) {
       throw err;
@@ -47,13 +49,23 @@ export class UserRepository {
     }
   }
 
-  async getUserIdsByUsername(username: string) {
+  async getUserIdsByUsernameOrPhoneNo(username?: string, phoneNo?: string) {
+    if (!username && !phoneNo) {
+      throw new HttpException(
+        ErrorMessages.USERNAME_OR_PHONENUMBER_REQUIRED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     try {
-      const res = await this.repository
-        .createQueryBuilder()
-        .select('userId')
-        .where('username = :username', { username: username })
-        .getRawOne();
+      const query = this.repository.createQueryBuilder().select('userId');
+
+      if (username) {
+        query.where('username = :username', { username: username });
+      }
+      if (phoneNo) {
+        query.where('phoneNo = :phoneNo', { phoneNo: phoneNo });
+      }
+      const res = query.getRawOne();
       return res;
     } catch (err) {
       throw err;

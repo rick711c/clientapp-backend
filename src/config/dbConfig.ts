@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AccessToken } from 'src/lib/entities/accessToken.entity';
 import { Appointment } from 'src/lib/entities/appointment.entity';
+import { OTP } from 'src/lib/entities/otp.entity';
 import { Patient } from 'src/lib/entities/patient.entity';
 import { RefreshToken } from 'src/lib/entities/refreshToken.entity';
 import { Role } from 'src/lib/entities/role.entity';
@@ -15,7 +16,7 @@ export const dbConfig: TypeOrmModuleOptions = {
   username: 'scrum_management',
   password: 'reactgod@123',
   database: 'scrum_management',
-  entities: [Appointment, Patient, User, UserRole, Role,AccessToken,RefreshToken],
+  entities: [Appointment, Patient, User, UserRole, Role,AccessToken,RefreshToken,OTP],
   synchronize: false,
   logging: true
 };

@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
 import { CurrentUser } from 'src/decorators/currentUser.decorator';
-import { UserInfo } from 'src/lib/interfaces/userInfo.interface';
+import { CurrentUserInfo } from 'src/lib/interfaces/userInfo.interface';
 
 @Controller('/appointment')
 export class AppointmentController {
@@ -21,7 +21,7 @@ export class AppointmentController {
   @Post('/')
   async createAppointment(
     @Body() createAppointmentDto: CreateAppointmentDto,
-    @CurrentUser() user: UserInfo,
+    @CurrentUser() user: CurrentUserInfo,
   ) {
     try {
       return this.service.createAppointment(createAppointmentDto,user);

@@ -5,10 +5,10 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     userId: string;
 
-    @Column()
+    @Column({ nullable: true })
     username: string;
 
-    @Column()
+    @Column({ nullable: true })
     enPassword: string;
 
     @Column()
@@ -20,7 +20,7 @@ export class User {
     @Column({ nullable: true })
     phoneNumber: string;
 
-    @Column()
+    @Column({ nullable: true })
     email: string;
 
     @CreateDateColumn()

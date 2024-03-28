@@ -8,8 +8,9 @@ import { LoginDto } from './dto/login.dto';
 import { UtilService } from 'src/lib/utils/util.service';
 import { TokenService } from '../authToken/token.service';
 import { UserRole } from 'src/lib/entities/userRole.entity';
-import { UserRolesEnum } from 'src/lib/enums';
+import { LoginMethod, UserRolesEnum } from 'src/lib/enums';
 import { Public } from 'src/decorators/public.decorator';
+import { OTPService } from '../otp/otp.service';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
     private readonly userRoleService: UserRoleService,
     private readonly utilService: UtilService,
     private readonly tokenService: TokenService,
+    private readonly otpService: OTPService
   ) {}
 
   async registerUser(createUserDto: CreateUserDto) {
@@ -49,7 +51,7 @@ export class UserService {
           createUserDto.password,
         );
         createUserDto.username = createUserDto.username || createUserDto.email;
-        createUserDto.role = createUserDto.role || UserRolesEnum.CUSTOMER
+        createUserDto.role = createUserDto.role || UserRolesEnum.CUSTOMER;
         const newUser = await this.userRepository.registerUser(createUserDto);
         const addRole = await this.userRoleService.addUserRoleByRoleName(
           newUser.userId,
@@ -75,10 +77,16 @@ export class UserService {
     }
   }
 
-  
   async login(credentials: LoginDto) {
     try {
-      const userDetails = await this.validateUser(credentials);
+      let userDetails: any;
+      if (credentials.loginMethod === LoginMethod.PASSWORD_BASED) {
+        userDetails = await this.validateUserByPassword(credentials);
+      }
+      else{
+        userDetails = await this.validateUserByOTP(credentials)
+      }
+
       // Generate access token
       const accessToken =
         await this.tokenService.generateAccessToken(userDetails);
@@ -95,10 +103,10 @@ export class UserService {
     }
   }
 
-  async validateUser(credentials: LoginDto) {
+  async validateUserByPassword(credentials: LoginDto) {
     try {
       //find the user by the username
-      const userId = await this.userRepository.getUserIdsByUsername(
+      const userId = await this.userRepository.getUserIdsByUsernameOrPhoneNo(
         credentials.username,
       );
       if (!userId) {
@@ -125,19 +133,55 @@ export class UserService {
     }
   }
 
-  async generateAccessTokenByRefreshToken(userId:string,refreshToken:string){
-    try{
-      const isValid = await this.tokenService.validatedRefreshToken(userId,refreshToken);
-      if(!isValid){
-        throw new HttpException(ErrorMessages.INVALID_TOKEN,HttpStatus.BAD_REQUEST)
+  async validateUserByOTP(credentials:LoginDto) {
+    try {
+      const phoneNo =credentials.phoneNo;
+      const otp = credentials.otp;
+
+      //verify otp
+      const isOtpVerified = await this.otpService.verifyOTP(phoneNo, otp);
+      if(!isOtpVerified) {
+        throw new HttpException(ErrorMessages.INVALID_OTP,HttpStatus.BAD_REQUEST)
+      }
+
+      //checking if the user present in out user db
+      let userId =
+        await this.userRepository.getUserIdsByUsernameOrPhoneNo(phoneNo);
+      if (!userId) {
+        //if user not exist, then create user with minimum info
+        let createUserDto = new CreateUserDto();
+        createUserDto.phoneNumber = phoneNo;
+        const newUser = await this.userRepository.registerUser(createUserDto);
+        userId = newUser.userId;
       }
       const userDetails = await this.getUserDetailsById(userId);
-      const accessToken = await this.tokenService.generateAccessToken(userDetails);
-      return accessToken;
-    }catch(err){
+      return userDetails;
+    } catch (err) {
       throw err;
     }
   }
 
-
+  async generateAccessTokenByRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ) {
+    try {
+      const isValid = await this.tokenService.validatedRefreshToken(
+        userId,
+        refreshToken,
+      );
+      if (!isValid) {
+        throw new HttpException(
+          ErrorMessages.INVALID_TOKEN,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      const userDetails = await this.getUserDetailsById(userId);
+      const accessToken =
+        await this.tokenService.generateAccessToken(userDetails);
+      return accessToken;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
