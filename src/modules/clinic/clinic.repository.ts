@@ -34,7 +34,7 @@ export class ClinicRepository {
         .select('*')
         //.where('createdBy = :createdBy',{createdBy: userId})
         .getRawMany();
-      res;
+      return res;
     } catch (err) {
       throw err;
     }
@@ -60,14 +60,15 @@ export class ClinicRepository {
     }
   }
 
-  async getCheckupDayHours(clinicId:string){
+  async getCheckupDayAndHours(clinicId:string){
     try{
       const query = this.checkupDayRepo
       .createQueryBuilder('cd')
       .select(['cd.checkupDay as checkupDay','ch.checkupHour as checkupHour', 'ch.slots as slots'])
       .innerJoin(CheckupHour ,'ch','ch.dayId = cd.dayId')
       .where('cd.clinicId = :clinicId',{clinicId})
-      .getRawMany();
+     
+      return query.getRawMany()
     }catch (err) {
       throw err;
     }

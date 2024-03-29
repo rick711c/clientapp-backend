@@ -49,7 +49,7 @@ export class ClinicController {
   @Get('/clinicDetails')
   async getClinicDetails(@Query('clinicId') clinicId:string){
     try{
-      return this.getClinicDetails(clinicId)
+      return this.service. getClinicDetails(clinicId)
     }catch (err) {
       throw err;
     }

@@ -56,8 +56,8 @@ export class ClinicService {
   async getClinicDetails(clinicId:string){
     try{
       const clinicDetails = await this.repository.getClinicDetails(clinicId);
-      const daysAndHours = await this.repository.getCheckupDayHours(clinicId);
-      return {...clinicDetails, daysAndHours};
+      const checkupDateTime = await this.repository.getCheckupDayAndHours(clinicId);
+      return {...clinicDetails, checkupDateTime};
     }catch (err) {
       throw err;
     }

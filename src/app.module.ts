@@ -10,10 +10,11 @@ import { UserModule } from './modules/auth/user/user.module';
 import { UserRoleModule } from './modules/auth/userRole/userRole.module';
 import { RoleModule } from './modules/auth/role/role.module';
 import { TokenModule } from './modules/auth/authToken/token.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthGuard } from './guards/authentication.guard';
 import { OTPModule } from './modules/auth/otp/otp.module';
 import { ClinicModule } from './modules/clinic/clinic.module';
+import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.interceptor';
 
 
 @Module({
@@ -36,6 +37,10 @@ import { ClinicModule } from './modules/clinic/clinic.module';
       provide: APP_GUARD,
       useClass: AuthGuard, 
     },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ExceptionHandlerInterceptor
+    }
   ],
 })
 export class AppModule {}

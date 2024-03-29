@@ -23,14 +23,14 @@ export class TokenService {
       }
       // Generate access token
       const accessToken = jwt.sign(user, 'your_access_token_secret', {
-        expiresIn: '1h',
+        expiresIn: '10 days',
       });
 
       //save metadata
       const accessTokenDto = new SaveAccessTokenDto();
       accessTokenDto.userId = user.userId;
       const now = new Date();
-      accessTokenDto.expireDate = new Date(now.getTime() + 36 * 60 * 60 * 1000); // 1h from current datetime
+      accessTokenDto.expireDate = new Date(now.getTime() + 240 * 60 * 60 * 1000); 
       await this.tokenRepository.saveAccessTokenMetadata(accessTokenDto);
 
       return accessToken;
