@@ -13,6 +13,7 @@ import { TokenModule } from './modules/auth/authToken/token.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/authentication.guard';
 import { OTPModule } from './modules/auth/otp/otp.module';
+import { ClinicModule } from './modules/clinic/clinic.module';
 
 
 @Module({
@@ -25,6 +26,7 @@ import { OTPModule } from './modules/auth/otp/otp.module';
     RoleModule,
     TokenModule,
     OTPModule,
+    ClinicModule,
     TypeOrmModule.forRoot({ ...dbConfig }),
   ],
   controllers: [AppController],

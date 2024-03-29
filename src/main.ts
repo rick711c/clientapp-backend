@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import helmet from 'helmet';
+import nocache from 'nocache';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -8,6 +10,7 @@ async function bootstrap() {
   await app.listen(3000);
 
   app.enableCors();
-  app.useGlobalPipes(new ValidationPipe({whitelist: true,transform: true}));
+  app.use(helmet());
+  app.useGlobalPipes(new ValidationPipe());
 }
 bootstrap();

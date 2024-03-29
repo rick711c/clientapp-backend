@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PatientRepository } from './patient.repository';
 import { CreatePatientDto } from './dto/createPatient.dto';
-import { CurrentUserInfo } from 'src/lib/interfaces/userInfo.interface';
+import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
 
 @Injectable()
 export class PatientService {
@@ -11,7 +11,7 @@ export class PatientService {
     user: CurrentUserInfo,
     createPatientDto: CreatePatientDto,
   ) {
-    try {
+    try { 
       createPatientDto.createdBy = user.userId;
       return this.patientRepository.createPatient(createPatientDto);
     } catch (e) {

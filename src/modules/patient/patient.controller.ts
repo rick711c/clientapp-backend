@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { CreatePatientDto } from './dto/createPatient.dto';
 import { PatientService } from './patient.service';
 import { CurrentUser } from 'src/decorators/currentUser.decorator';
-import { CurrentUserInfo } from 'src/lib/interfaces/userInfo.interface';
+import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
 
 @Controller('/patient')
 export class PatientController {

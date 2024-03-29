@@ -30,7 +30,7 @@ export class TokenService {
       const accessTokenDto = new SaveAccessTokenDto();
       accessTokenDto.userId = user.userId;
       const now = new Date();
-      accessTokenDto.expireDate = new Date(now.getTime() + 1 * 60 * 60 * 1000); // 1h from current datetime
+      accessTokenDto.expireDate = new Date(now.getTime() + 36 * 60 * 60 * 1000); // 1h from current datetime
       await this.tokenRepository.saveAccessTokenMetadata(accessTokenDto);
 
       return accessToken;

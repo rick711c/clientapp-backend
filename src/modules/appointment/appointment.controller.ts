@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
 import { CurrentUser } from 'src/decorators/currentUser.decorator';
-import { CurrentUserInfo } from 'src/lib/interfaces/userInfo.interface';
+import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
 
 @Controller('/appointment')
 export class AppointmentController {
