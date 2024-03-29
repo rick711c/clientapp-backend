@@ -2,37 +2,34 @@ import { IsUUID, IsString, IsOptional, IsEmail, IsEnum } from 'class-validator';
 import { UserRolesEnum } from 'src/lib/enums';
 
 export class CreateUserDto {
-    @IsOptional()
-    @IsString()
-    username: string;
+  @IsOptional()
+  @IsString()
+  username: string;
 
-    @IsOptional()
-    @IsString()
-    enPassword: string;
+  @IsOptional()
+  @IsString()
+  enPassword: string;
 
-    @IsOptional()
-    @IsString()
-    password: string;
+  @IsOptional()
+  @IsString()
+  password: string;
 
-    @IsString()
-    firstName: string;
+  @IsString()
+  fullName: string;
 
-    @IsString()
-    lastName: string;
+  @IsString()
+  phoneNumber: string;
 
-    @IsString()
-    phoneNumber: string;
+  @IsOptional()
+  @IsEmail()
+  email: string;
 
-    @IsOptional()
-    @IsEmail()
-    email: string;
+  @IsOptional()
+  @IsEnum(UserRolesEnum)
+  role: string;
 
-    @IsOptional()
-    @IsEnum(UserRolesEnum)
-    role:string
-
-    constructor(){
-        this.firstName = 'Guest';
-        this.lastName = '';
-    }
+  constructor() {
+    this.fullName = this.fullName ? this.fullName : 'Guest';
+    this.role = this.role ? this.role : UserRolesEnum.CUSTOMER;
+  }
 }

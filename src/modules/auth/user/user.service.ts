@@ -19,7 +19,7 @@ export class UserService {
     private readonly userRoleService: UserRoleService,
     private readonly utilService: UtilService,
     private readonly tokenService: TokenService,
-    private readonly otpService: OTPService
+    private readonly otpService: OTPService,
   ) {}
 
   async registerUser(createUserDto: CreateUserDto) {
@@ -47,11 +47,15 @@ export class UserService {
           );
         }
       } else {
-        createUserDto.enPassword = await this.utilService.hashPassword(
-          createUserDto.password,
-        );
-        createUserDto.username = createUserDto.username || createUserDto.email;
-        createUserDto.role = createUserDto.role || UserRolesEnum.CUSTOMER;
+
+        //if user is login using otp, no need to do anything with password
+        if (createUserDto.password) {
+          createUserDto.enPassword = await this.utilService.hashPassword(
+            createUserDto.password,
+          );
+          createUserDto.username = createUserDto.username || createUserDto.email;
+        }
+
         const newUser = await this.userRepository.registerUser(createUserDto);
         const addRole = await this.userRoleService.addUserRoleByRoleName(
           newUser.userId,
@@ -82,9 +86,8 @@ export class UserService {
       let userDetails: any;
       if (credentials.loginMethod === LoginMethod.PASSWORD_BASED) {
         userDetails = await this.validateUserByPassword(credentials);
-      }
-      else{
-        userDetails = await this.validateUserByOTP(credentials)
+      } else {
+        userDetails = await this.validateUserByOTP(credentials);
       }
 
       // Generate access token
@@ -133,15 +136,18 @@ export class UserService {
     }
   }
 
-  async validateUserByOTP(credentials:LoginDto) {
+  async validateUserByOTP(credentials: LoginDto) {
     try {
-      const phoneNo =credentials.phoneNo;
+      const phoneNo = credentials.phoneNo;
       const otp = credentials.otp;
 
       //verify otp
       const isOtpVerified = await this.otpService.verifyOTP(phoneNo, otp);
-      if(!isOtpVerified) {
-        throw new HttpException(ErrorMessages.INVALID_OTP,HttpStatus.BAD_REQUEST)
+      if (!isOtpVerified) {
+        throw new HttpException(
+          ErrorMessages.INVALID_OTP,
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       //checking if the user present in out user db
@@ -153,6 +159,8 @@ export class UserService {
         createUserDto.phoneNumber = phoneNo;
         const newUser = await this.userRepository.registerUser(createUserDto);
         userId = newUser.userId;
+        const role = await this.userRoleService.addUserRoleByRoleName(userId,UserRolesEnum.CUSTOMER)
+        
       }
       const userDetails = await this.getUserDetailsById(userId);
       return userDetails;
