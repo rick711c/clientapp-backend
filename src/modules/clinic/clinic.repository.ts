@@ -86,4 +86,6 @@ export class ClinicRepository {
       throw err;
     }
   }
+
+ 
 }

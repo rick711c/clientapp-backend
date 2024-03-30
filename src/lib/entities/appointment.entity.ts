@@ -21,8 +21,17 @@ export class Appointment {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   modifyDate: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp'})
   bookingDate: Date;
+
+  @Column()
+  clinicId: UUID;
+
+  @Column()
+  bookingDayId: UUID;
+
+  @Column()
+  bookingHourId: UUID;
 
   @Column({ default: false })
   isDeleted: boolean;

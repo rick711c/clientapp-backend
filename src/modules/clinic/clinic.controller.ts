@@ -27,30 +27,40 @@ export class ClinicController {
   }
 
   @Post('/addCheckupDay')
-  async addCheckupDay(@Body() checkupDayDto:AddCheckupDayDto){
-    try{
-      return this.service.addCheckupDay(checkupDayDto)
-    }
-    catch (err) {
+  async addCheckupDay(@Body() checkupDayDto: AddCheckupDayDto) {
+    try {
+      return this.service.addCheckupDay(checkupDayDto);
+    } catch (err) {
       throw err;
     }
   }
 
   @Post('/addCheckupHour')
-  async addCheckupHour(@Body()checkupHourDto:AddCheckupHourDto){
-    try{
-     return this.service. addCheckupHour(checkupHourDto);
-    }
-    catch (err) {
+  async addCheckupHour(@Body() checkupHourDto: AddCheckupHourDto) {
+    try {
+      return this.service.addCheckupHour(checkupHourDto);
+    } catch (err) {
       throw err;
     }
   }
 
   @Get('/clinicDetails')
-  async getClinicDetails(@Query('clinicId') clinicId:string){
-    try{
-      return this.service. getClinicDetails(clinicId)
-    }catch (err) {
+  async getClinicDetails(@Query('clinicId') clinicId: string) {
+    try {
+      return this.service.getClinicDetails(clinicId);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Get('/getAvailableClinic')
+  async getGroupedBookingData(
+    @Query('clinicId') clinicId: string,
+    @Query('dayUpto') dayUpto: number,
+  ) {
+    try {
+      return this.service.getGroupedBookingData(clinicId, dayUpto);
+    } catch (err) {
       throw err;
     }
   }

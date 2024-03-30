@@ -64,4 +64,33 @@ export class AppointmentRepository {
       throw e;
     }
   }
+
+  async getGroupedBookingData(clinicId: string, dayUpto: number) {
+    const dateLowerRange: Date = new Date();
+    const dateUpperRange: Date = new Date(
+      dateLowerRange.getTime() + dayUpto * 24 * 60 * 60 * 1000,
+    );
+    dateLowerRange.setHours(0, 0, 0, 0); //beacuse we will not comare with the time stamp,
+    dateUpperRange.setHours(0, 0, 0, 0);
+
+    try {
+      const query = this.repo
+        .createQueryBuilder()
+        .select([
+          'COUNT(appointmentId) as appointmentCount',
+          'bookingHourId',
+          'DATE(bookingDate) AS bookingDate',
+        ])
+        .where('clinicId = :clinicId', { clinicId })
+        .andWhere('DATE(bookingDate) >= :dateLowerRange', { dateLowerRange })
+        .andWhere('DATE(bookingDate) <= :dateUpperRange', { dateUpperRange })
+        .groupBy('bookingDate')
+        .addGroupBy('bookingHourId');
+
+      const res = await query.getRawMany();
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

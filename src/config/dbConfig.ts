@@ -32,6 +32,6 @@ export const dbConfig: TypeOrmModuleOptions = {
     CheckupHour,
     CheckupDay
   ],
-  synchronize: true,
+  synchronize: false,
   logging: true,
 };

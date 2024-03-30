@@ -2,15 +2,23 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
-import nocache from 'nocache';
+import * as nocache from 'nocache';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-   app.setGlobalPrefix('/api');
+  app.setGlobalPrefix('/api');
   await app.listen(3000);
 
   app.enableCors();
   app.use(helmet());
-  app.useGlobalPipes(new ValidationPipe());
+  app.use(nocache());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      stopAtFirstError: true,
+      validationError: { target: false },
+    }),
+  );
 }
 bootstrap();

@@ -3,10 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { ClinicRepository } from './clinic.repository';
 import { AddCheckupDayDto } from './dto/addCheckupDate.dto';
 import { AddCheckupHourDto } from './dto/addCheckupHour.dto';
+import { AppointmentService } from '../appointment/appointment.service';
 
 @Injectable()
 export class ClinicService {
-  constructor(private repository: ClinicRepository) {}
+  constructor(
+    private repository: ClinicRepository,
+    private appointmentService: AppointmentService
+    ) {}
 
   async createClinic(addClinicDto: AddClinicDto) {
     try {
@@ -58,6 +62,15 @@ export class ClinicService {
       const clinicDetails = await this.repository.getClinicDetails(clinicId);
       const checkupDateTime = await this.repository.getCheckupDayAndHours(clinicId);
       return {...clinicDetails, checkupDateTime};
+    }catch (err) {
+      throw err;
+    }
+  }
+
+  async getGroupedBookingData(clinicId:string,dayUpto: number){
+    try{
+      const groupdata = await this.appointmentService.getGroupedBookingData(clinicId,dayUpto);
+      return groupdata;
     }catch (err) {
       throw err;
     }

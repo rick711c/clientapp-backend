@@ -8,6 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 @Module({
     imports:[ TypeOrmModule.forFeature([Appointment])],
     controllers:[AppointmentController],
-    providers:[AppointmentService,AppointmentRepository]
+    providers:[AppointmentService,AppointmentRepository],
+    exports:[AppointmentService]
 })
 export class AppointmentModule {}
