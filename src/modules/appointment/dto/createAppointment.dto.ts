@@ -1,13 +1,13 @@
-import { IsBoolean, IsDate, IsEnum, IsIn, IsInt, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsDate, IsEnum, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 import { UUID } from 'crypto';
 import { DaysOfWeek } from 'src/lib/enums';
 
 export class CreateAppointmentDto {
 
-  @IsInt()
+  @IsString()
   doctorId: UUID;
 
-  @IsInt()
+  @IsString()
   patientId: UUID;
 
   @IsUUID()
@@ -30,6 +30,7 @@ export class CreateAppointmentDto {
   @IsString()
   bookingDayId:UUID;
 
+  @IsNotEmpty({message: 'required field'})
   @IsString()
   bookingHourId:UUID;
 

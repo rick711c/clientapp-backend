@@ -9,10 +9,13 @@ import {
   Patch,
   Post,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
 import { CurrentUser } from 'src/decorators/currentUser.decorator';
 import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
+import { validate } from 'class-validator';
 
 @Controller('/appointment')
 export class AppointmentController {
@@ -24,6 +27,7 @@ export class AppointmentController {
     @CurrentUser() user: CurrentUserInfo,
   ) {
     try {
+      console.log(createAppointmentDto)
       return this.service.createAppointment(createAppointmentDto,user);
     } catch (e) {
       throw e;

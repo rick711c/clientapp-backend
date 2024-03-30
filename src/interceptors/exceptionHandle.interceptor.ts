@@ -15,7 +15,11 @@ export class ExceptionHandlerInterceptor implements NestInterceptor{
                 }
             }),
             catchError((error)=>{
-               throw new HttpException(error.message,403);
+                if(error instanceof HttpException){
+                    throw error;
+                }else{
+                    throw new HttpException(error.message, 403);
+                }
             })
         )
     }

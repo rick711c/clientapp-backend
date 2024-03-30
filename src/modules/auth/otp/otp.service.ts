@@ -19,10 +19,10 @@ export class OTPService {
     private utilService: UtilService,
   ) {
     // Initialize Twilio client with your Twilio Account SID and Auth Token
-    this.twilioClient = new Twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN,
-    );
+    // this.twilioClient = new Twilio(
+    //   process.env.TWILIO_ACCOUNT_SID,
+    //   process.env.TWILIO_AUTH_TOKEN,
+    // );
   }
 
   async sendOtp(phoneNumber: string, otp: string = '1234'): Promise<any> {

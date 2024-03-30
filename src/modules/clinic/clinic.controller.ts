@@ -1,5 +1,5 @@
 import { AddClinicDto } from './dto/addClinic.dto';
-import { Body, Controller, Get, Injectable, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Injectable, ParseUUIDPipe, Post, Query } from '@nestjs/common';
 import { ClinicService } from './clinic.service';
 import { AddCheckupDayDto } from './dto/addCheckupDate.dto';
 import { AddCheckupHourDto } from './dto/addCheckupHour.dto';
@@ -55,7 +55,7 @@ export class ClinicController {
 
   @Get('/getAvailableClinic')
   async getGroupedBookingData(
-    @Query('clinicId') clinicId: string,
+    @Query('clinicId', new ParseUUIDPipe()) clinicId: string,
     @Query('dayUpto') dayUpto: number,
   ) {
     try {
