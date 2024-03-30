@@ -35,4 +35,7 @@ export class Appointment {
 
   @Column({ default: false })
   isDeleted: boolean;
+
+  @Column({ default: false })
+  isCompleted: boolean;
 }

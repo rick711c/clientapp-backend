@@ -24,3 +24,10 @@ export interface ClinicAddress{
     country: string;
     landmark: string;
 }
+
+export interface AvailableSlot{
+  date: Date;
+  hour: string;
+  availableSlots: number;
+
+}

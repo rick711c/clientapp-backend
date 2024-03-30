@@ -22,6 +22,7 @@ export class AppointmentService {
   async getAppointmentList(userId: string) {
     try {
       const res = await this.repo.getAppointmentList(userId);
+      return res;
     } catch (e) {
       throw e;
     }

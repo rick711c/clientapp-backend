@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsBoolean, IsDate, IsEnum, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 import { UUID } from 'crypto';
 import { DaysOfWeek } from 'src/lib/enums';
@@ -10,18 +11,20 @@ export class CreateAppointmentDto {
   @IsString()
   patientId: UUID;
 
+  @IsOptional()
   @IsUUID()
   createdBy:UUID;
 
-  @IsDate()
   @IsOptional()
+  @IsDate()
   createDate: Date;
 
-  @IsDate()
   @IsOptional()
+  @IsDate()
   modifyDate: Date;
 
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   bookingDate: Date;
 
   @IsString()
@@ -31,7 +34,7 @@ export class CreateAppointmentDto {
   bookingDayId:UUID;
 
   @IsNotEmpty({message: 'required field'})
-  @IsString()
+  @IsUUID()
   bookingHourId:UUID;
 
   @IsBoolean()

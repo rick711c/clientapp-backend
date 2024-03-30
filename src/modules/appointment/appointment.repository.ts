@@ -27,9 +27,10 @@ export class AppointmentRepository {
       const res = await this.repo
         .createQueryBuilder()
         .select('*')
-        .where('userId = :userId', { userId })
+        .where('createdBy = :userId', { userId })
         .andWhere('isDeleted = :isDeleted', { isDeleted: 0 })
         .getRawMany();
+        return res;
     } catch (e) {
       throw e;
     }

@@ -64,7 +64,7 @@ export class ClinicRepository {
     try{
       const query = this.checkupDayRepo
       .createQueryBuilder('cd')
-      .select(['cd.checkupDay as checkupDay','ch.checkupHour as checkupHour', 'ch.slots as slots'])
+      .select([ 'cd.dayId as dayId','cd.checkupDay as checkupDay','ch.checkupHour as checkupHour', 'ch.hourId as hourId', 'ch.slots as slots'])
       .innerJoin(CheckupHour ,'ch','ch.dayId = cd.dayId')
       .where('cd.clinicId = :clinicId',{clinicId})
      
