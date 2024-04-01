@@ -12,7 +12,6 @@ export class AppointmentService {
   async createAppointment(createAppointmentDto: CreateAppointmentDto, user:any) {
     try {
       createAppointmentDto.createdBy = user.userId;
-      createAppointmentDto.bookingDate.setHours(0,0,0,0);
       return this.repo.createAppointment(createAppointmentDto);
     } catch (e) {
       throw e;

@@ -23,6 +23,7 @@ export class CreateAppointmentDto {
   @IsDate()
   modifyDate: Date;
 
+  @IsOptional()
   @IsDate()
   @Transform(({ value }) => new Date(value))
   bookingDate: Date;
@@ -40,7 +41,8 @@ export class CreateAppointmentDto {
   @IsBoolean()
   isDeleted: boolean;
 
-  // constructor(){
-  //    this.bookingDate.setHours(0,0,0,0);
-  // }
+  constructor(){
+    this.bookingDate = this.bookingDate?this.bookingDate:new Date()
+     this.bookingDate.setHours(0,0,0,0);
+  }
 }
