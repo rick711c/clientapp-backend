@@ -11,6 +11,8 @@ import { Role } from 'src/lib/entities/role.entity';
 import { User } from 'src/lib/entities/user.entity';
 import { UserRole } from 'src/lib/entities/userRole.entity';
 import { UserModule } from 'src/modules/auth/user/user.module';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 
 export const dbConfig: TypeOrmModuleOptions = {
   type: 'mysql',

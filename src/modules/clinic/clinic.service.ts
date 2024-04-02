@@ -79,7 +79,7 @@ export class ClinicService {
 
       for (let i: number = 0; i < dates.length; i++) {
         let slotInfo: AvailableSlot = {
-          date: dates[i],
+          date: dates[i].toISOString().split('T')[0],
           hour: '',
           availableSlots: 0,
         };

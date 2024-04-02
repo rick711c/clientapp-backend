@@ -55,11 +55,11 @@ export class ClinicController {
 
   @Get('/getAvailableClinic')
   async getGroupedBookingData(
-    @Query('clinicId', new ParseUUIDPipe()) clinicId: string,
+    @Query('clinicId') clinicId: string,
     @Query('dayUpto') dayUpto: number,
   ) {
     try {
-      return this.service.getGroupedBookingData(clinicId, dayUpto);
+      return this.service.getGroupedBookingData(clinicId, dayUpto?dayUpto:7);
     } catch (err) {
       throw err;
     }

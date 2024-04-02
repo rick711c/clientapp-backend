@@ -26,7 +26,7 @@ export interface ClinicAddress{
 }
 
 export interface AvailableSlot{
-  date: Date;
+  date: string;
   hour: string;
   availableSlots: number;
 
