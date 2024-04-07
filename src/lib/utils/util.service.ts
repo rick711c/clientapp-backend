@@ -1,9 +1,8 @@
 import * as bcrypt from 'bcrypt';
-import * as crypto from 'crypto';import * as forge from 'node-forge'
-
+import * as crypto from 'crypto';
+import * as forge from 'node-forge';
 
 export class UtilService {
-
   private readonly algorithm = 'aes-256-cbc';
 
   async comparePasswords(
@@ -21,7 +20,6 @@ export class UtilService {
     }
   }
 
-
   async hashPassword(password: string): Promise<string> {
     const saltRounds = 10; // Number of salt rounds to generate
     const salt = await bcrypt.genSalt(saltRounds);
@@ -29,7 +27,7 @@ export class UtilService {
     return hashedPassword;
   }
 
-  encrypt(text: string, key:string): string {
+  encrypt(text: string, key: string): string {
     const iv = crypto.randomBytes(16); // Generate a random IV (Initialization Vector)
     const cipher = crypto.createCipheriv(this.algorithm, Buffer.from(key), iv);
     let encrypted = cipher.update(text);
@@ -37,13 +35,30 @@ export class UtilService {
     return iv.toString('hex') + ':' + encrypted.toString('hex');
   }
 
-  decrypt(text: string,key:string): string {
+  decrypt(text: string, key: string): string {
     const textParts = text.split(':');
     const iv = Buffer.from(textParts.shift(), 'hex');
     const encryptedText = Buffer.from(textParts.join(':'), 'hex');
-    const decipher = crypto.createDecipheriv(this.algorithm, Buffer.from(key), iv);
+    const decipher = crypto.createDecipheriv(
+      this.algorithm,
+      Buffer.from(key),
+      iv,
+    );
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
+  }
+
+  formatDateToYYYYMMDD(date: string): string {
+
+    let [month,day, year] = date.split('/')
+    //The month value is zero-based in JavaScript, meaning 0 is January, 1 is February, and so forth. So you'll need to decrement the month by 1.
+    const dateObj = new Date(+year, +month - 1, +day)
+    let mm = ('0' + (dateObj.getMonth() + 1)).slice(-2);
+    let dd = ('0' + dateObj.getDate()).slice(-2);
+    let yy = dateObj.getFullYear();
+    const dateString = yy + '-' + mm + '-' + dd;
+    return dateString;
+
   }
 }

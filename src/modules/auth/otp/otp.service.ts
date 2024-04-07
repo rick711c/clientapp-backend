@@ -6,8 +6,6 @@ import * as dotenv from 'dotenv';
 import { SaveOTPDto } from './dto/saveOTP.dto';
 import { OTPRepository } from './otp.repository';
 import { UtilService } from 'src/lib/utils/util.service';
-import { ErrorMessages } from 'src/lib/enums/errorMessages.enum';
-import { Sms } from 'twilio/lib/twiml/VoiceResponse';
 dotenv.config({ path: './.env' });
 
 @Injectable()

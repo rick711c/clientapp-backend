@@ -27,7 +27,10 @@ export interface ClinicAddress{
 
 export interface AvailableSlot{
   date: string;
-  hour: string;
-  availableSlots: number;
+  hourAndSlot: HourAndSlot[];
+}
 
+export interface HourAndSlot{
+  hour:string;
+  availableSlots:number
 }

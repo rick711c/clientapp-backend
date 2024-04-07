@@ -7,10 +7,11 @@ import { ClinicRepository } from './clinic.repository';
 import { CheckupHour } from 'src/lib/entities/checkupHours.entity';
 import { CheckupDay } from 'src/lib/entities/checkupDay.entity';
 import { AppointmentModule } from '../appointment/appointment.module';
+import { UtilService } from 'src/lib/utils/util.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Clinic,CheckupHour,CheckupDay]),AppointmentModule],
   controllers: [ClinicController],
-  providers: [ClinicService, ClinicRepository],
+  providers: [ClinicService, ClinicRepository,UtilService],
 })
 export class ClinicModule {}

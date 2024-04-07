@@ -4,13 +4,16 @@ import { ClinicRepository } from './clinic.repository';
 import { AddCheckupDayDto } from './dto/addCheckupDate.dto';
 import { AddCheckupHourDto } from './dto/addCheckupHour.dto';
 import { AppointmentService } from '../appointment/appointment.service';
-import { AvailableSlot } from 'src/lib/interfaces/index.interface';
+import { AvailableSlot, HourAndSlot } from 'src/lib/interfaces/index.interface';
+import { UtilService } from 'src/lib/utils/util.service';
+import { daysOfWeekArray } from 'src/lib/enums';
 
 @Injectable()
 export class ClinicService {
   constructor(
     private repository: ClinicRepository,
     private appointmentService: AppointmentService,
+    private utilService: UtilService,
   ) {}
 
   async createClinic(addClinicDto: AddClinicDto) {
@@ -64,60 +67,69 @@ export class ClinicService {
     }
   }
 
+
   async getGroupedBookingData(clinicId: string, dayUpto: number) {
     try {
       const bookingData = await this.appointmentService.getGroupedBookingData(
         clinicId,
         dayUpto,
       );
-      const dayAndHourInfo =
+      const dayAndHourInfo: any =
         await this.repository.getCheckupDayAndHours(clinicId);
+      console.log('dayAndHourInfo', dayAndHourInfo);
 
-      const dates: Date[] = this.generateNextDays(dayUpto, dayAndHourInfo);
-
+      const dates: string[] = this.generateNextDays(dayUpto, dayAndHourInfo);
+      console.log(dates);
       const availableSlots: AvailableSlot[] = [];
 
       for (let i: number = 0; i < dates.length; i++) {
         let slotInfo: AvailableSlot = {
-          date: dates[i].toISOString().split('T')[0],
-          hour: '',
-          availableSlots: 0,
+          date: dates[i],
+          hourAndSlot: [],
         };
 
         //finding out the data for a perticular date from dates array. how many booking done for that date
         const matchedDates = bookingData.filter((item) => {
-          if (item.bookingDate === dates[i]) {
+          if (item.bookingDate === slotInfo.date) {
             return item;
           }
         });
 
-        //use a map to find the count of booking per hourId
+        //use a map to find the count of booking per hourId for the current slotinfo date
         let map = new Map();
-        if (matchedDates.length > 0) {
-          for (let j = 0; i < matchedDates.length; j++) {
-            let key = matchedDates[j].bookingHourId;
-            if (map.has(key)) {
-              map.set(key, map.get(key) + 1);
-            } else {
-              // Key is not present in the map, so create a new entry with value 0
-              map.set(key, 1);
-            }
+
+        for (let j = 0; j < matchedDates.length; j++) {
+          let key = matchedDates[j].bookingHourId;
+          if (map.has(key)) {
+            map.set(key, map.get(key) + 1);
+          } else {
+            // Key is not present in the map, so create a new entry with value 0
+            map.set(key, 1);
           }
         }
+
         //making entries for those hourId , for which no booking are done yet
-        for (let j = 0; j < dayAndHourInfo.length; j++) {
-          if (!map.has(dayAndHourInfo[j].hourId)) {
-            map.set(dayAndHourInfo[j].hourId, 0);
+        const day = daysOfWeekArray[new Date(slotInfo.date).getDay()];
+        const dayAndHourInfoForCurrentDate = dayAndHourInfo.filter(
+          (item) =>item.checkupDay === day 
+        );
+        console.log('dayAndHourInfoForCurrentDate', dayAndHourInfoForCurrentDate)
+        for (let j = 0; j < dayAndHourInfoForCurrentDate.length; j++) {
+          if (!map.has(dayAndHourInfoForCurrentDate[j].hourId)) {
+            map.set(dayAndHourInfoForCurrentDate[j].hourId, 0);
           }
         }
-       
+
+        console.log('map', map);
         //now iterate throw the map to find how many remaining slots available for the perticular hourId
         map.forEach((value: number, key: string) => {
-          const data = dayAndHourInfo.find((item) => item.hourId === key);
 
-          const available = data.slots - value;
-          slotInfo.availableSlots = available;
-          slotInfo.hour = data.checkupHour;
+          const data = dayAndHourInfo.find((item) => item.hourId === key);
+          let hourAndSlotInfo:HourAndSlot={
+            hour: data.checkupHour,
+            availableSlots: data.slots - value
+          }
+          slotInfo.hourAndSlot.push(hourAndSlotInfo);
         });
         availableSlots.push(slotInfo);
       }
@@ -130,25 +142,15 @@ export class ClinicService {
     }
   }
 
-  generateNextDays(daysUpto: number, dayAndHourInfo: any): Date[] {
+  generateNextDays(daysUpto: number, dayAndHourInfo: any): string[] {
     const currentDate = new Date(); // Get current date
     currentDate.setHours(0, 0, 0, 0);
-
-    const daysOfWeek: string[] = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
 
     let days: string = dayAndHourInfo.map(
       (appointment) => appointment.checkupDay,
     );
 
-    const dates: Date[] = [];
+    const dates: string[] = [];
     let count: number = 0;
     let i = 0;
 
@@ -156,13 +158,15 @@ export class ClinicService {
       const nextDate = new Date(
         currentDate.getTime() + i * 24 * 60 * 60 * 1000,
       ); // Add i days
-      if (days.includes(daysOfWeek[nextDate.getDay()])) {
-        dates.push(nextDate);
+      if (days.includes(daysOfWeekArray[nextDate.getDay()])) {
+        dates.push(
+          this.utilService.formatDateToYYYYMMDD(nextDate.toLocaleDateString()),
+        );
         count++;
       }
       i++;
     }
-
+    console.log('dates from genaratir funtion', dates);
     return dates;
   }
 }
