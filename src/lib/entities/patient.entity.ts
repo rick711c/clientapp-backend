@@ -15,7 +15,10 @@ export class Patient {
   createdBy: UUID;
 
   @Column()
-  name: string;
+  fullname: string;
+
+  @Column()
+  gender: string;
 
   @Column({
     type: 'timestamp',

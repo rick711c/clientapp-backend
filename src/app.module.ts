@@ -15,6 +15,7 @@ import { AuthGuard } from './guards/authentication.guard';
 import { OTPModule } from './modules/auth/otp/otp.module';
 import { ClinicModule } from './modules/clinic/clinic.module';
 import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.interceptor';
+import { DoctorModule } from './modules/doctor/doctor.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.inte
     TokenModule,
     OTPModule,
     ClinicModule,
+    DoctorModule,
     TypeOrmModule.forRoot({ ...dbConfig }),
   ],
   controllers: [AppController],

@@ -19,6 +19,12 @@ export enum DaysOfWeek {
   Saturday = 'Saturday',
 }
 
+export enum Gender{
+  MALE = 'male',
+  FEMALE = 'female',
+  OTHER = 'other'
+}
+
 export const daysOfWeekArray: string[] = [
   'Sunday',
   'Monday',
@@ -28,3 +34,5 @@ export const daysOfWeekArray: string[] = [
   'Friday',
   'Saturday',
 ];
+
+

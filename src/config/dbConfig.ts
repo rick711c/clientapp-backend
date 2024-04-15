@@ -12,6 +12,7 @@ import { User } from 'src/lib/entities/user.entity';
 import { UserRole } from 'src/lib/entities/userRole.entity';
 import { UserModule } from 'src/modules/auth/user/user.module';
 import * as dotenv from 'dotenv';
+import { Doctor } from 'src/lib/entities/doctor.entity';
 dotenv.config({ path: './.env' });
 
 export const dbConfig: TypeOrmModuleOptions = {
@@ -32,7 +33,8 @@ export const dbConfig: TypeOrmModuleOptions = {
     OTP,
     Clinic,
     CheckupHour,
-    CheckupDay
+    CheckupDay,
+    Doctor
   ],
   synchronize: false,
   logging: true,
