@@ -18,9 +18,10 @@ export class CreatePatientDto {
   @IsEnum(Gender)
   gender:string;
 
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber: string;
 
+  @IsOptional()
   @IsUUID()
   createdBy: UUID;
 

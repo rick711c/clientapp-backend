@@ -4,7 +4,7 @@ import { ClinicRepository } from './clinic.repository';
 import { AddCheckupDayDto } from './dto/addCheckupDate.dto';
 import { AddCheckupHourDto } from './dto/addCheckupHour.dto';
 import { AppointmentService } from '../appointment/appointment.service';
-import { AvailableSlot, HourAndSlot } from 'src/lib/interfaces/index.interface';
+import { AvailableSlot, DateWithDayId, HourAndSlot } from 'src/lib/interfaces/index.interface';
 import { UtilService } from 'src/lib/utils/util.service';
 import { daysOfWeekArray } from 'src/lib/enums';
 
@@ -78,13 +78,14 @@ export class ClinicService {
         await this.repository.getCheckupDayAndHours(clinicId);
       console.log('dayAndHourInfo', dayAndHourInfo);
 
-      const dates: string[] = this.generateNextDays(dayUpto, dayAndHourInfo);
+      const dates: DateWithDayId[] = this.generateNextDays(dayUpto, dayAndHourInfo);
       console.log(dates);
       const availableSlots: AvailableSlot[] = [];
 
       for (let i: number = 0; i < dates.length; i++) {
         let slotInfo: AvailableSlot = {
-          date: dates[i],
+          dayId:dates[i].dayId,
+          date: dates[i].date,
           hourAndSlot: [],
         };
 
@@ -127,7 +128,8 @@ export class ClinicService {
           const data = dayAndHourInfo.find((item) => item.hourId === key);
           let hourAndSlotInfo:HourAndSlot={
             hour: data.checkupHour,
-            availableSlots: data.slots - value
+            availableSlots: data.slots - value,
+            hourId: data.hourId,
           }
           slotInfo.hourAndSlot.push(hourAndSlotInfo);
         });
@@ -142,15 +144,18 @@ export class ClinicService {
     }
   }
 
-  generateNextDays(daysUpto: number, dayAndHourInfo: any): string[] {
+  generateNextDays(daysUpto: number, dayAndHourInfo: any): DateWithDayId[] {
     const currentDate = new Date(); // Get current date
     currentDate.setHours(0, 0, 0, 0);
 
-    let days: string = dayAndHourInfo.map(
+    let days: string[] = dayAndHourInfo.map(
       (appointment) => appointment.checkupDay,
     );
+    let dayIds: string[] = dayAndHourInfo.map(
+      (appointment) => appointment.hourId
+    )
 
-    const dates: string[] = [];
+    const dates: DateWithDayId[] = [];
     let count: number = 0;
     let i = 0;
 
@@ -158,10 +163,15 @@ export class ClinicService {
       const nextDate = new Date(
         currentDate.getTime() + i * 24 * 60 * 60 * 1000,
       ); // Add i days
-      if (days.includes(daysOfWeekArray[nextDate.getDay()])) {
-        dates.push(
-          this.utilService.formatDateToYYYYMMDD(nextDate.toLocaleDateString()),
-        );
+      const index = days.indexOf(daysOfWeekArray[nextDate.getDay()]);
+      if (index !== -1) {
+        
+         {  this.utilService.formatDateToYYYYMMDD(nextDate.toLocaleDateString());}
+        const obj:DateWithDayId={
+          date:this.utilService.formatDateToYYYYMMDD(nextDate.toLocaleDateString()) ,
+          dayId: dayIds[index]
+        }
+        dates.push(obj);
         count++;
       }
       i++;
