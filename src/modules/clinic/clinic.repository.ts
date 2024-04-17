@@ -87,5 +87,16 @@ export class ClinicRepository {
     }
   }
 
+
+  async getClinicAddress(clinicId:string) {
+    try{
+      return this.repository.createQueryBuilder()
+      .select('address->address')
+      .where('clinicId = :clinicId',{clinicId})
+      .getRawOne();
+    }catch (err) {
+      throw err;
+    }
+  }
  
 }

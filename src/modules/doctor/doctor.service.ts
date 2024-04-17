@@ -21,4 +21,12 @@ export class DoctorService {
       throw err;
     }
   }
+
+  async getDoctorBasicInfo(doctorId: string) {
+    try {
+      return this.repository.getDoctorBasicInfo(doctorId);
+    } catch (err) {
+      throw err;
+    }
+  }
 }

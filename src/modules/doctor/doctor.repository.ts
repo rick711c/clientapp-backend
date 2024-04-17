@@ -39,4 +39,15 @@ export class DoctorRepository {
       throw err;
     }
   }
+
+  async getDoctorBasicInfo(doctorId: string) {
+    try {
+      return this.repository.createQueryBuilder()
+      .select(['fullname','education','specialization'])
+      .where('doctorId = :doctorId', {doctorId})
+      .getRawOne();
+    } catch (err) {
+      throw err;
+    }
+  }
 }

@@ -20,6 +20,9 @@ export class Patient {
   @Column()
   gender: string;
 
+  @Column()
+  age: number;
+
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',

@@ -7,6 +7,7 @@ import {
   IsPhoneNumber,
   IsUUID,
   IsEnum,
+  IsNumber,
 } from 'class-validator';
 import { UUID } from 'crypto';
 import { Gender } from 'src/lib/enums';
@@ -20,6 +21,10 @@ export class CreatePatientDto {
 
   @IsString()
   phoneNumber: string;
+
+  @IsOptional()
+  @IsNumber()
+  age: number;
 
   @IsOptional()
   @IsUUID()
