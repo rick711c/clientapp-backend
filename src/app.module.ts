@@ -16,6 +16,7 @@ import { OTPModule } from './modules/auth/otp/otp.module';
 import { ClinicModule } from './modules/clinic/clinic.module';
 import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.interceptor';
 import { DoctorModule } from './modules/doctor/doctor.module';
+import { CommonModule } from './modules/common/common.module';
 
 
 @Module({
@@ -30,6 +31,7 @@ import { DoctorModule } from './modules/doctor/doctor.module';
     OTPModule,
     ClinicModule,
     DoctorModule,
+    CommonModule,
     TypeOrmModule.forRoot({ ...dbConfig }),
   ],
   controllers: [AppController],

@@ -10,5 +10,5 @@ export class Clinic {
   clinicName: string;
 
   @Column('json', {nullable:true})
-  address: ClinicAddress;
+  address: JSON;
 }

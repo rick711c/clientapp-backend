@@ -6,10 +6,6 @@ export class AddClinicDto {
   clinicName: string;
 
   @IsJSON()
-  address: ClinicAddress;
-
-  @IsOptional()
-  @IsString()
-  checkupDays: string;
+  address: any;
 
 }

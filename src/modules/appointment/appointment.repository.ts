@@ -3,6 +3,8 @@ import { Appointment } from 'src/lib/entities/appointment.entity';
 import { Repository } from 'typeorm';
 import { CreateAppointmentDto } from './dto/createAppointment.dto';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
+import { Doctor } from 'src/lib/entities/doctor.entity';
+import { Patient } from 'src/lib/entities/patient.entity';
 
 export class AppointmentRepository {
   constructor(
@@ -30,7 +32,7 @@ export class AppointmentRepository {
         .where('createdBy = :userId', { userId })
         .andWhere('isDeleted = :isDeleted', { isDeleted: 0 })
         .getRawMany();
-        return res;
+      return res;
     } catch (e) {
       throw e;
     }
@@ -39,7 +41,7 @@ export class AppointmentRepository {
   async getAppointmentDetails(appointmentId: string) {
     try {
       const res = await this.repo
-        .createQueryBuilder()
+        .createQueryBuilder('ap') // Main query table alias
         .select('*')
         .where('appointmentId = :appointmentId', {
           appointmentId: appointmentId,

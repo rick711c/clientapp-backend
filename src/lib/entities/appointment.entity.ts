@@ -1,5 +1,6 @@
 import { UUID } from 'crypto';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { DoctorInfo, PatientInfo } from '../interfaces/index.interface';
 
 @Entity('appointment')
 export class Appointment {
@@ -38,4 +39,11 @@ export class Appointment {
 
   @Column({ default: false })
   isCompleted: boolean;
+
+  // @Column('json', {nullable:true})
+  // doctorInfo: DoctorInfo;
+
+  // @Column('json', {nullable:true})
+  // patientInfo: PatientInfo;
+
 }

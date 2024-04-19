@@ -19,16 +19,16 @@ export class PatientRepository {
     }
   }
 
-
   async getPatientList(userId: string) {
     try {
-      const res = await this.repository.createQueryBuilder()
-      .select('*')
-      .where('createdBy = :createdBy',{createdBy: userId})
-      .getRawMany();
+      const res = await this.repository
+        .createQueryBuilder()
+        .select('*')
+        .where('createdBy = :createdBy', { createdBy: userId })
+        .getRawMany();
       res;
     } catch (err) {
       throw err;
     }
-  }
+  }  
 }

@@ -26,4 +26,5 @@ export class PatientService {
       throw err;
     }
   }
+
 }

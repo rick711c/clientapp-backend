@@ -26,11 +26,30 @@ export interface ClinicAddress{
 }
 
 export interface AvailableSlot{
+  dayId:string;
   date: string;
   hourAndSlot: HourAndSlot[];
 }
 
 export interface HourAndSlot{
+  hourId: string;
   hour:string;
   availableSlots:number
+}
+
+export interface DateWithDayId{
+  date:string;
+  dayId:string;
+}
+
+export interface DoctorInfo{
+  fullname:string;
+  specialization:string,
+  education:string
+}
+
+export interface PatientInfo{
+  fullname:string,
+  age:number,
+  gender:string
 }
