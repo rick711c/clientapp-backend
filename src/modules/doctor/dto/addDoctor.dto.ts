@@ -24,7 +24,7 @@ export class AddDoctorDto {
 
   @IsOptional()
   @IsString()
-  address?: string;
+  address?: string
 
   @IsOptional()
   @IsNumber()

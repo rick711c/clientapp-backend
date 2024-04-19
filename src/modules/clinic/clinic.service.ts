@@ -7,6 +7,7 @@ import { AppointmentService } from '../appointment/appointment.service';
 import { AvailableSlot, DateWithDayId, HourAndSlot } from 'src/lib/interfaces/index.interface';
 import { UtilService } from 'src/lib/utils/util.service';
 import { daysOfWeekArray } from 'src/lib/enums';
+import { json } from 'stream/consumers';
 
 @Injectable()
 export class ClinicService {
@@ -18,6 +19,7 @@ export class ClinicService {
 
   async createClinic(addClinicDto: AddClinicDto) {
     try {
+      addClinicDto.address = JSON.parse( addClinicDto.address)
       return this.repository.createClinic(addClinicDto);
     } catch (err) {
       throw err;
@@ -181,11 +183,4 @@ export class ClinicService {
   }
 
 
-  async getClinicAddress(clinicId:string) {
-    try{
-      return this.repository. getClinicAddress(clinicId);
-    }catch (err) {
-      throw err;
-    }
-  }
 }

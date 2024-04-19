@@ -30,18 +30,5 @@ export class PatientRepository {
     } catch (err) {
       throw err;
     }
-  }
-
-  async getPatientBasicInfo(patientId: string) {
-    try {
-      const res = await this.repository
-        .createQueryBuilder()
-        .select(['fullname', 'age', 'gender'])
-        .where('patientId = :patientId', { patientId })
-        .getRawOne();
-      return res;
-    } catch (err) {
-      throw err;
-    }
-  }
+  }  
 }

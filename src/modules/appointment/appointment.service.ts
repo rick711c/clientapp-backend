@@ -6,13 +6,13 @@ import { create } from 'domain';
 import { DoctorService } from '../doctor/doctor.service';
 import { PatientService } from '../patient/patient.service';
 import { ClinicService } from '../clinic/clinic.service';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class AppointmentService {
   constructor(
     private readonly repo: AppointmentRepository,
-    private readonly doctorService: DoctorService,
-    private readonly patientService: PatientService,
+    private readonly commonService: CommonService,
   ) {}
 
   async createAppointment(
@@ -22,19 +22,20 @@ export class AppointmentService {
     try {
       createAppointmentDto.createdBy = user.userId;
 
-      const doctorInfo = await this.doctorService.getDoctorBasicInfo(
+      const doctorInfo = await this.commonService.getDoctorBasicInfo(
         createAppointmentDto.doctorId,
       );
-      const patientInfo = await this.patientService.getPatientBasicInfo(
+      const patientInfo = await this.commonService.getPatientBasicInfo(
         createAppointmentDto.patientId,
       );
-     
+      const clinicAddress = await this.commonService.getClinicAddress(
+        createAppointmentDto.clinicId,
+      );
 
-      createAppointmentDto.doctorInfo = doctorInfo;
-      createAppointmentDto.patientInfo = patientInfo;
-      
+      const newAppointment =
+        await this.repo.createAppointment(createAppointmentDto);
 
-      return this.repo.createAppointment(createAppointmentDto);
+      return{...newAppointment, patientInfo,clinicAddress,doctorInfo}
     } catch (e) {
       throw e;
     }
@@ -51,7 +52,20 @@ export class AppointmentService {
 
   async getAppointmentDetails(appointmentId: string) {
     try {
-      return this.repo.getAppointmentDetails(appointmentId);
+
+      const appointmentDetails = await this.repo.getAppointmentDetails(appointmentId);
+      const doctorInfo = await this.commonService.getDoctorBasicInfo(
+        appointmentDetails.doctorId,
+      );
+      const patientInfo = await this.commonService.getPatientBasicInfo(
+        appointmentDetails.patientId,
+      );
+      const clinicAddress = await this.commonService.getClinicAddress(
+        appointmentDetails.clinicId,
+      );
+
+      return{...appointmentDetails, patientInfo,clinicAddress,doctorInfo}
+     
     } catch (e) {
       throw e;
     }

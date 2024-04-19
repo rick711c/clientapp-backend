@@ -7,9 +7,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { PatientModule } from "../patient/patient.module";
 import { ClinicModule } from "../clinic/clinic.module";
 import { DoctorModule } from "../doctor/doctor.module";
+import { CommonModule } from "../common/common.module";
 
 @Module({
-    imports:[ TypeOrmModule.forFeature([Appointment]), PatientModule,DoctorModule],
+    imports:[ TypeOrmModule.forFeature([Appointment]), CommonModule],
     controllers:[AppointmentController],
     providers:[AppointmentService,AppointmentRepository],
     exports:[AppointmentService]

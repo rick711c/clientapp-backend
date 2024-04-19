@@ -40,10 +40,10 @@ export class Appointment {
   @Column({ default: false })
   isCompleted: boolean;
 
-  @Column('json', {nullable:true})
-  doctorInfo: DoctorInfo;
+  // @Column('json', {nullable:true})
+  // doctorInfo: DoctorInfo;
 
-  @Column('json', {nullable:true})
-  patientInfo: PatientInfo;
+  // @Column('json', {nullable:true})
+  // patientInfo: PatientInfo;
 
 }

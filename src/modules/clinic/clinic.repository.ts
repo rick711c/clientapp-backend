@@ -20,8 +20,8 @@ export class ClinicRepository {
   async createClinic(addClinicDto: AddClinicDto) {
     try {
       const newClinic = this.repository.create(addClinicDto);
-      const res = await this. repository.save(newClinic);
-      return res;
+      return this. repository.save(newClinic)
+     
     } catch (err) {
       throw err;
     }
@@ -88,15 +88,5 @@ export class ClinicRepository {
   }
 
 
-  async getClinicAddress(clinicId:string) {
-    try{
-      return this.repository.createQueryBuilder()
-      .select('address->address')
-      .where('clinicId = :clinicId',{clinicId})
-      .getRawOne();
-    }catch (err) {
-      throw err;
-    }
-  }
  
 }
