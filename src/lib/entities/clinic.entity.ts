@@ -9,6 +9,4 @@ export class Clinic {
   @Column()
   clinicName: string;
 
-  @Column('json', {nullable:true})
-  address: ClinicAddress;
 }

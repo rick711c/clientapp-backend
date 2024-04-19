@@ -179,4 +179,13 @@ export class ClinicService {
     console.log('dates from genaratir funtion', dates);
     return dates;
   }
+
+
+  async getClinicAddress(clinicId:string) {
+    try{
+      return this.repository. getClinicAddress(clinicId);
+    }catch (err) {
+      throw err;
+    }
+  }
 }

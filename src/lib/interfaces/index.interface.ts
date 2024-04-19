@@ -41,3 +41,15 @@ export interface DateWithDayId{
   date:string;
   dayId:string;
 }
+
+export interface DoctorInfo{
+  fullname:string;
+  specialization:string,
+  education:string
+}
+
+export interface PatientInfo{
+  fullname:string,
+  age:number,
+  gender:string
+}

@@ -26,4 +26,12 @@ export class PatientService {
       throw err;
     }
   }
+
+  async getPatientBasicInfo(patientId: string) {
+    try {
+      return this.patientRepository.getPatientBasicInfo(patientId);
+    } catch (err) {
+      throw err;
+    }
+  }
 }
