@@ -49,8 +49,8 @@ export class UserRepository {
     }
   }
 
-  async getUserIdsByUsernameOrPhoneNo(username?: string, phoneNo?: string) {
-    if (!username && !phoneNo) {
+  async getUserIdsByUsernameOrPhoneNo(input:any) {
+    if (!input.username && !input.phoneNo) {
       throw new HttpException(
         ErrorMessages.USERNAME_OR_PHONENUMBER_REQUIRED,
         HttpStatus.BAD_REQUEST,
@@ -59,14 +59,14 @@ export class UserRepository {
     try {
       const query = this.repository.createQueryBuilder().select('userId');
 
-      if (username) {
-        query.where('username = :username', { username: username });
+      if (input.username) {
+        query.where('username = :username', { username: input.username });
       }
-      if (phoneNo) {
-        query.where('phoneNo = :phoneNo', { phoneNo: phoneNo });
+      if (input.phoneNo) {
+        query.where('phoneNumber = :phoneNo', { phoneNo: input.phoneNo });
       }
-      const res = query.getRawOne();
-      return res;
+      const res = await query.getRawOne();
+      return res?.userId?res.userId:null;
     } catch (err) {
       throw err;
     }

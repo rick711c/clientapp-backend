@@ -83,6 +83,7 @@ export class UserService {
 
   async login(credentials: LoginDto) {
     try {
+
       let userDetails: any;
       if (credentials.loginMethod === LoginMethod.PASSWORD_BASED) {
         userDetails = await this.validateUserByPassword(credentials);
@@ -109,8 +110,9 @@ export class UserService {
   async validateUserByPassword(credentials: LoginDto) {
     try {
       //find the user by the username
+      const input={username: credentials.username}
       const userId = await this.userRepository.getUserIdsByUsernameOrPhoneNo(
-        credentials.username,
+       input
       );
       if (!userId) {
         throw new HttpException(
@@ -151,8 +153,11 @@ export class UserService {
       }
 
       //checking if the user present in out user db
+      const input = {
+        phoneNo: phoneNo
+      }
       let userId =
-        await this.userRepository.getUserIdsByUsernameOrPhoneNo(phoneNo);
+        await this.userRepository.getUserIdsByUsernameOrPhoneNo(input);
       if (!userId) {
         //if user not exist, then create user with minimum info
         let createUserDto = new CreateUserDto();

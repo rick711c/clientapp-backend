@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreatePatientDto } from './dto/createPatient.dto';
 import { PatientService } from './patient.service';
 import { CurrentUser } from 'src/decorators/currentUser.decorator';
@@ -17,6 +17,15 @@ export class PatientController {
       return this.patientService.createPatient(user, createPatientDto);
     } catch (e) {
       throw e;
+    }
+  }
+
+  @Get('/patientlist')
+  async getPatientList(@CurrentUser()user:any) {
+    try {
+      return this.patientService.getPatientList(user.userId);
+    } catch (err) {
+      throw err;
     }
   }
 }

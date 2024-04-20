@@ -26,7 +26,7 @@ export class PatientRepository {
         .select('*')
         .where('createdBy = :createdBy', { createdBy: userId })
         .getRawMany();
-      res;
+      return res;
     } catch (err) {
       throw err;
     }
