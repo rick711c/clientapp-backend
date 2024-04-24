@@ -21,18 +21,18 @@ export class DoctorRepository {
   async getDoctorDetails(doctorId: string) {
     try {
       const doctorDetails = await this.repository
-        .createQueryBuilder()
+        .createQueryBuilder('d')
         .select([
-          'doctorId',
-          'fullname',
-          'specialization',
-          'email',
-          'experience',
-          'education',
-          'certifications',
-          'languagesSpoken',
+          'd."doctorId"',
+          'd."fullname"',
+          'd"specialization"',
+          'd"email"',
+          'd."experience"',
+          'd."education"',
+          'd."certifications"',
+          'd."languagesSpoken"',
         ])
-        .where('doctorId = :doctorId', { doctorId })
+        .where('d."doctorId" = :doctorId', { doctorId })
         .getRawOne();
       return doctorDetails;
     } catch (err) {
@@ -42,10 +42,11 @@ export class DoctorRepository {
 
   async getDoctorBasicInfo(doctorId: string) {
     try {
-      return this.repository.createQueryBuilder()
-      .select(['fullname','education','specialization'])
-      .where('doctorId = :doctorId', {doctorId})
-      .getRawOne();
+      return this.repository
+        .createQueryBuilder('d')
+        .select(['d."fullname"', 'd."education"', 'd."specialization"'])
+        .where('doctorId = :doctorId', { doctorId })
+        .getRawOne();
     } catch (err) {
       throw err;
     }

@@ -1,49 +1,51 @@
-import { UUID } from 'crypto';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 import { DoctorInfo, PatientInfo } from '../interfaces/index.interface';
 
 @Entity('appointment')
 export class Appointment {
-  @PrimaryGeneratedColumn('uuid')
-  appointmentId: UUID;
+  @PrimaryGeneratedColumn('uuid', { name: 'appointmentId' })
+  appointmentId: string;
 
-  @Column()
-  createdBy:UUID;
+  @Column('uuid', { name: 'createdBy' })
+  createdBy: string;
 
-  @Column()
-  doctorId: UUID;
+  @Column('uuid', { name: 'doctorId' })
+  doctorId: string;
 
-  @Column()
-  patientId: UUID;
+  @Column('uuid', { name: 'patientId' })
+  patientId: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'createDate' })
   createDate: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'modifyDate',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   modifyDate: Date;
 
-  @Column({ type: 'timestamp'})
+  @Column({ name: 'bookingDate', type: 'timestamp' })
   bookingDate: Date;
 
-  @Column()
-  clinicId: UUID;
+  @Column('uuid', { name: 'clinicId' })
+  clinicId: string;
 
-  @Column()
-  bookingDayId: UUID;
+  @Column('uuid', { name: 'bookingDayId' })
+  bookingDayId: string;
 
-  @Column()
-  bookingHourId: UUID;
+  @Column('uuid', { name: 'bookingHourId' })
+  bookingHourId: string;
 
-  @Column({ default: false })
+  @Column({ name: 'isDeleted', default: false })
   isDeleted: boolean;
 
-  @Column({ default: false })
+  @Column({ name: 'isCompleted', default: false })
   isCompleted: boolean;
-
-  // @Column('json', {nullable:true})
-  // doctorInfo: DoctorInfo;
-
-  // @Column('json', {nullable:true})
-  // patientInfo: PatientInfo;
-
 }

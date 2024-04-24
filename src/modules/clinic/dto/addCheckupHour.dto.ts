@@ -1,7 +1,8 @@
 // checkupHour.dto.ts
-import { IsUUID, IsString } from 'class-validator';
+import { IsUUID, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class AddCheckupHourDto {
+  @IsOptional()
   @IsUUID()
   hourId: string;
 
@@ -11,6 +12,6 @@ export class AddCheckupHourDto {
   @IsUUID()
   dayId: string;
 
-  @IsString()
+  @IsNumber()
   slots: number;
 }

@@ -20,8 +20,7 @@ export class ClinicRepository {
   async createClinic(addClinicDto: AddClinicDto) {
     try {
       const newClinic = this.repository.create(addClinicDto);
-      return this. repository.save(newClinic)
-     
+      return this.repository.save(newClinic);
     } catch (err) {
       throw err;
     }
@@ -40,53 +39,53 @@ export class ClinicRepository {
     }
   }
 
-  async addCheckupDay(checkupDayDto:AddCheckupDayDto){
-    try{
+  async addCheckupDay(checkupDayDto: AddCheckupDayDto) {
+    try {
       const newCheckupDay = this.checkupDayRepo.create(checkupDayDto);
       return this.checkupDayRepo.save(newCheckupDay);
-    }
-    catch (err) {
+    } catch (err) {
       throw err;
     }
   }
 
-  async addCheckupHour(checkupHour:AddCheckupHourDto){
-    try{
+  async addCheckupHour(checkupHour: AddCheckupHourDto) {
+    try {
       const newCheckupHour = this.checkupHourRepo.create(checkupHour);
       return this.checkupHourRepo.save(newCheckupHour);
-    }
-    catch (err) {
+    } catch (err) {
       throw err;
     }
   }
 
-  async getCheckupDayAndHours(clinicId:string){
-    try{
+  async getCheckupDayAndHours(clinicId: string) {
+    try {
       const query = this.checkupDayRepo
-      .createQueryBuilder('cd')
-      .select([ 'cd.dayId as dayId','cd.checkupDay as checkupDay','ch.checkupHour as checkupHour', 'ch.hourId as hourId', 'ch.slots as slots'])
-      .innerJoin(CheckupHour ,'ch','ch.dayId = cd.dayId')
-      .where('cd.clinicId = :clinicId',{clinicId})
-     
-      return query.getRawMany()
-    }catch (err) {
+        .createQueryBuilder('cd')
+        .select([
+          'cd."dayId" as "dayId"',
+          'cd."checkupDay" as "checkupDay"',
+          'ch."checkupHour" as "checkupHour"',
+          'ch.hourId as "hourId"',
+          'ch."slots" as "slots"',
+        ])
+        .innerJoin(CheckupHour, 'ch', 'ch."dayId" = cd."dayId"')
+        .where('cd."clinicId" = :clinicId', { clinicId });
+
+      return query.getRawMany();
+    } catch (err) {
       throw err;
     }
   }
 
-
-  async getClinicDetails(clinicId:string){
-    try{
+  async getClinicDetails(clinicId: string) {
+    try {
       return this.repository
-      .createQueryBuilder()
-      .select('*')
-      .where('clinicId = :clinicId',{clinicId:clinicId})
-      .getRawOne();
-    }catch (err) {
+        .createQueryBuilder()
+        .select('*')
+        .where('clinicId = :clinicId', { clinicId: clinicId })
+        .getRawOne();
+    } catch (err) {
       throw err;
     }
   }
-
-
- 
 }

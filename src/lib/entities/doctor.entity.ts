@@ -1,43 +1,43 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Doctor {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { name: 'doctorId' })
   doctorId: string;
 
-  @Column()
+  @Column({ name: 'fullname' })
   fullname: string;
 
-  @Column()
+  @Column({ name: 'gender' })
   gender: string;
 
-  @Column()
+  @Column({ name: 'specialization' })
   specialization: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'licenseNumber', nullable: true })
   licenseNumber: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'phoneNumber', nullable: true })
   phoneNumber: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'email', nullable: true })
   email: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'address', nullable: true })
   address: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'experience', nullable: true })
   experience: number;
 
-  @Column({ nullable: true })
+  @Column({ name: 'education', nullable: true })
   education: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'certifications', nullable: true })
   certifications: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'languagesSpoken', nullable: true })
   languagesSpoken: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'notes', type: 'text', nullable: true })
   notes: string;
 }

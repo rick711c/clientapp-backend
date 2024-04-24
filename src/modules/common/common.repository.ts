@@ -45,9 +45,9 @@ export class CommonRepository {
 
   async getDoctorBasicInfo(doctorId: string) {
     try {
-      return this.doctorRepo.createQueryBuilder()
-      .select(['fullname','education','specialization'])
-      .where('doctorId = :doctorId', {doctorId})
+      return this.doctorRepo.createQueryBuilder('d')
+      .select(['d."fullname"','d."education"','d."specialization"'])
+      .where('d."doctorId" = :doctorId', {doctorId})
       .getRawOne();
     } catch (err) {
       throw err;

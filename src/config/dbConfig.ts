@@ -16,12 +16,9 @@ import { Doctor } from 'src/lib/entities/doctor.entity';
 dotenv.config({ path: './.env' });
 
 export const dbConfig: TypeOrmModuleOptions = {
-  type: 'mysql',
-  host: 'db4free.net',
-  port: 3306,
-  username: 'scrum_management',
-  password: 'reactgod@123',
-  database: 'scrum_management',
+  type:'postgres',
+  url:'postgres://saikatdb_user:7UydC7AnouZbFRBimeKAQRZ254Stx0x1@dpg-cohbg021hbls7399t7ig-a.oregon-postgres.render.com/saikatdb',
+  ssl: true,
   entities: [
     Appointment,
     Patient,
@@ -36,6 +33,6 @@ export const dbConfig: TypeOrmModuleOptions = {
     CheckupDay,
     Doctor
   ],
-  synchronize: false,
+  synchronize: true,
   logging: true,
 };

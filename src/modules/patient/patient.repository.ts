@@ -24,7 +24,7 @@ export class PatientRepository {
       const res = await this.repository
         .createQueryBuilder()
         .select('*')
-        .where('createdBy = :createdBy', { createdBy: userId })
+        .where('"createdBy" = :createdBy', { createdBy: userId })
         .getRawMany();
       return res;
     } catch (err) {

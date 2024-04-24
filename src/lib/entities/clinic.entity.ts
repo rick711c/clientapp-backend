@@ -1,14 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { ClinicAddress } from '../interfaces/index.interface';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Clinic {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { name: 'clinicId' })
   clinicId: string;
 
-  @Column()
+  @Column({ name: 'clinicName' })
   clinicName: string;
 
-  @Column('json', {nullable:true})
+  @Column('json', { name: 'address', nullable: true })
   address: JSON;
 }
