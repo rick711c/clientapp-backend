@@ -154,7 +154,7 @@ export class ClinicService {
       (appointment) => appointment.checkupDay,
     );
     let dayIds: string[] = dayAndHourInfo.map(
-      (appointment) => appointment.hourId
+      (appointment) => appointment.dayId
     )
 
     const dates: DateWithDayId[] = [];

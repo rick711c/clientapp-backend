@@ -13,4 +13,7 @@ export class CheckupHour {
 
     @Column({ name: 'slots' })
     slots: number;
+
+    @Column({default: false})
+    isDisabled: boolean;
 }

@@ -69,7 +69,9 @@ export class ClinicRepository {
           'ch."slots" as "slots"',
         ])
         .innerJoin(CheckupHour, 'ch', 'ch."dayId" = cd."dayId"')
-        .where('cd."clinicId" = :clinicId', { clinicId });
+        .where('cd."clinicId" = :clinicId', { clinicId })
+        .andWhere('cd."isDisabled" = false',)
+        .andWhere('ch."isDisabled" = false',)
 
       return query.getRawMany();
     } catch (err) {
