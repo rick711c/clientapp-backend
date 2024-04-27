@@ -27,10 +27,12 @@ export class DoctorRepository {
           'd."fullname"',
           'd."specialization"',
           'd."email"',
+          'd."phoneNumber"',
           'd."experience"',
           'd."education"',
           'd."certifications"',
           'd."languagesSpoken"',
+
         ])
         .where('d."doctorId" = :doctorId', { doctorId })
         .getRawOne();
