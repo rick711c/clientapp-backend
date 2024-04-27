@@ -1,16 +1,16 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class OTP{
-    @PrimaryColumn()
+export class OTP {
+    @PrimaryColumn({ name: 'phoneNo' })
     phoneNo: string;
 
-    @Column()
+    @Column({ name: 'enOTP' })
     enOTP: string;
 
-    @Column()
+    @Column({ name: 'expiryTime' })
     expiryTime: Date;
 
-    @Column({type:"smallint", default:0})
-    isUsed: number
+    @Column({ name: 'isUsed', type: 'smallint', default: 0 })
+    isUsed: number;
 }

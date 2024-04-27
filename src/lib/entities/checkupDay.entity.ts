@@ -1,13 +1,13 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class CheckupDay{
-    @PrimaryGeneratedColumn('uuid')
+export class CheckupDay {
+    @PrimaryGeneratedColumn('uuid', { name: 'dayId' })
     dayId: string;
 
-    @Column()
-    checkupDay:string;
+    @Column({ name: 'checkupDay' })
+    checkupDay: string;
 
-    @Column()
-    clinicId:string;
+    @Column({ name: 'clinicId' })
+    clinicId: string;
 }

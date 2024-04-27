@@ -28,8 +28,8 @@ export class AppointmentRepository {
       const res = await this.repo
         .createQueryBuilder()
         .select('*')
-        .where('createdBy = :userId', { userId })
-        .andWhere('isDeleted = :isDeleted', { isDeleted: 0 })
+        .where('"createdBy" = :userId', { userId })
+        .andWhere('"isDeleted" = :isDeleted', { isDeleted: 0 })
         .getRawMany();
       return res;
     } catch (e) {
@@ -42,7 +42,7 @@ export class AppointmentRepository {
       const res = await this.repo
         .createQueryBuilder('ap') // Main query table alias
         .select('*')
-        .where('appointmentId = :appointmentId', {
+        .where('"appointmentId" = :appointmentId', {
           appointmentId: appointmentId,
         })
         .getRawOne();
@@ -79,15 +79,15 @@ export class AppointmentRepository {
       const query = this.repo
         .createQueryBuilder()
         .select([
-          'COUNT(appointmentId) as appointmentCount',
-          'bookingHourId',
-          'DATE(bookingDate) AS bookingDate',
+          'COUNT("appointmentId") as appointmentCount',
+          '"bookingHourId"',
+          'DATE("bookingDate") AS bookingDate',
         ])
-        .where('clinicId = :clinicId', { clinicId })
-        .andWhere('DATE(bookingDate) >= :dateLowerRange', { dateLowerRange })
-        .andWhere('DATE(bookingDate) <= :dateUpperRange', { dateUpperRange })
-        .groupBy('bookingDate')
-        .addGroupBy('bookingHourId');
+        .where('"clinicId" = :clinicId', { clinicId })
+        .andWhere('DATE("bookingDate") >= :dateLowerRange', { dateLowerRange })
+        .andWhere('DATE("bookingDate") <= :dateUpperRange', { dateUpperRange })
+        .groupBy('"bookingDate"')
+        .addGroupBy('"bookingHourId"');
 
       const res = await query.getRawMany();
       return res;

@@ -22,10 +22,10 @@ export class UserRoleRepository {
   async isUserRoleExist(userId: string, roleId: string) {
     try {
       const res = await this.repository
-        .createQueryBuilder()
-        .select('userId', 'roleId')
-        .where('userId = :userId', { userId })
-        .andWhere('roleId = :roleId', { roleId })
+        .createQueryBuilder('ur')
+        .select('ur."userId"', 'ur."roleId"')
+        .where('ur."userId" = :userId', { userId })
+        .andWhere('ur."roleId" = :roleId', { roleId })
         .getRawOne();
 
         return res;
@@ -37,9 +37,9 @@ export class UserRoleRepository {
   async getUserRoles(userId:string){
     try{
         const res = await this.repository.
-        createQueryBuilder()
-        .select('roleId')
-        .where('userId = :userId', { userId })
+        createQueryBuilder('r')
+        .select('r."roleId"')
+        .where('r."userId" = :userId', { userId })
         .getRawMany();
         return res;
     }catch (err) {

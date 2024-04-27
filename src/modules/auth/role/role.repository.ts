@@ -36,9 +36,9 @@ export class RoleRepository {
   async findById(roleId: string) {
     try {
       const roleDetails = await this.repository
-        .createQueryBuilder()
+        .createQueryBuilder('r')
         .select('*')
-        .where('roleId = :roleId', { roleId })
+        .where('r."roleId" = :roleId', { roleId })
         .getRawOne();
         return roleDetails;
     } catch (err) {

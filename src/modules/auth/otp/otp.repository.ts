@@ -23,7 +23,7 @@ export class OTPRepository{
         try{
             const res = await this.repository
             .createQueryBuilder('o')
-            .select('o.enOTP as enOTP')
+            .select('o.enOTP as "enOTP"')
             .where('o.phoneNo = :phoneNo',{phoneNo})
             .andWhere('o.expiryTime >= :currentDate', { currentDate: new Date() })
             .andWhere('o.isUsed = :isUsed', { isUsed:0})

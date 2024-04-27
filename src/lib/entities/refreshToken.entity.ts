@@ -1,20 +1,20 @@
-import { UUID } from "crypto";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UUID } from 'crypto';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class RefreshToken{
-    @PrimaryGeneratedColumn('uuid')
+export class RefreshToken {
+    @PrimaryGeneratedColumn('uuid', { name: 'tokenId' })
     tokenId: UUID;
 
-    @Column()
-    userId:UUID
+    @Column({ name: 'userId' })
+    userId: UUID;
 
-    @Column()
-    token:string
+    @Column({ name: 'token' })
+    token: string;
 
-    @CreateDateColumn()
-    createDate:Date
+    @CreateDateColumn({ name: 'createDate' })
+    createDate: Date;
 
-    @Column()
-    expireDate:Date
+    @Column({ name: 'expireDate' })
+    expireDate: Date;
 }

@@ -1,41 +1,32 @@
 import { UUID } from 'crypto';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
 @Entity('patient')
 export class Patient {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { name: 'patientId' })
   patientId: UUID;
 
-  @Column()
+  @Column({ name: 'createdBy' })
   createdBy: UUID;
 
-  @Column()
+  @Column({ name: 'fullname' })
   fullname: string;
 
-  @Column()
+  @Column({ name: 'gender' })
   gender: string;
 
-  @Column()
+  @Column({ name: 'age' })
   age: number;
 
-  @Column({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
+  @Column({ name: 'modifyDate', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   modifyDate: Date;
 
-  @Column()
+  @Column({ name: 'phoneNumber' })
   phoneNumber: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'email', nullable: true })
   email: string;
 
-  @Column({ default: false })
+  @Column({ name: 'isDeleted', default: false })
   isDeleted: boolean;
 }

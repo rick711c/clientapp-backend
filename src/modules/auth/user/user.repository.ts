@@ -27,8 +27,8 @@ export class UserRepository {
       const res = await this.repository
         .createQueryBuilder()
         .select('*')
-        .where('email = :email', { email: email })
-        .orWhere('phoneNumber = :phoneNumber', { phoneNumber })
+        .where('"email" = :email', { email: email })
+        .orWhere('"phoneNumber" = :phoneNumber', { phoneNumber })
         .getRawOne();
       return res;
     } catch (err) {
@@ -41,7 +41,7 @@ export class UserRepository {
       const res = await this.repository
         .createQueryBuilder()
         .select('*')
-        .where('userId = :userId', { userId: userId })
+        .where('"userId" = :userId', { userId: userId })
         .getRawOne();
       return res;
     } catch (err) {
@@ -57,13 +57,13 @@ export class UserRepository {
       );
     }
     try {
-      const query = this.repository.createQueryBuilder().select('userId');
+      const query = this.repository.createQueryBuilder('u').select("u.userId");
 
       if (input.username) {
-        query.where('username = :username', { username: input.username });
+        query.where('"username" = :username', { username: input.username });
       }
       if (input.phoneNo) {
-        query.where('phoneNumber = :phoneNo', { phoneNo: input.phoneNo });
+        query.where('"phoneNumber" = :phoneNo', { phoneNo: input.phoneNo });
       }
       const res = await query.getRawOne();
       return res?.userId?res.userId:null;

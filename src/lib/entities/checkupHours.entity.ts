@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class CheckupHour{
-    @PrimaryGeneratedColumn('uuid')
+export class CheckupHour {
+    @PrimaryGeneratedColumn('uuid', { name: 'hourId' })
     hourId: string;
 
-    @Column()
+    @Column({ name: 'checkupHour' })
     checkupHour: string;
-    
-    @Column()
+
+    @Column('uuid', { name: 'dayId' })
     dayId: string;
 
-    @Column()
-    slots: number
+    @Column({ name: 'slots' })
+    slots: number;
 }

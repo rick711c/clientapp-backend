@@ -8,7 +8,7 @@ import { AddCheckupHourDto } from './dto/addCheckupHour.dto';
 export class ClinicController {
   constructor(private service: ClinicService) {}
 
-  @Post('')
+  @Post()
   async createClinic(@Body() addClinicDto: AddClinicDto) {
     try {
       return this.service.createClinic(addClinicDto);

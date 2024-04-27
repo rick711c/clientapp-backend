@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import { SaveOTPDto } from './dto/saveOTP.dto';
 import { OTPRepository } from './otp.repository';
 import { UtilService } from 'src/lib/utils/util.service';
+import { ErrorMessages } from 'src/lib/enums/errorMessages.enum';
 dotenv.config({ path: './.env' });
 
 @Injectable()
@@ -62,6 +63,11 @@ export class OTPService {
   async verifyOTP(phoneNo: string, otp: string) {
     try {
       const enOTP = await this.OTPrepo.getOTP(phoneNo, otp);
+      if(!enOTP) 
+        {
+          throw new HttpException(ErrorMessages.INVALID_OTP,HttpStatus.UNAUTHORIZED);
+        }
+
       const isVerified = await this.utilService.comparePasswords(otp, enOTP);
       if (isVerified) {
         await this.OTPrepo.updateUsedStatus(1);
