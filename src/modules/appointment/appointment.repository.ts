@@ -3,7 +3,8 @@ import { Appointment } from 'src/lib/entities/appointment.entity';
 import { Repository } from 'typeorm';
 import { CreateAppointmentDto } from './dto/createAppointment.dto';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
-
+import { CheckupDay } from 'src/lib/entities/checkupDay.entity';
+import { CheckupHour } from 'src/lib/entities/checkupHours.entity';
 
 export class AppointmentRepository {
   constructor(
@@ -41,12 +42,18 @@ export class AppointmentRepository {
     try {
       const res = await this.repo
         .createQueryBuilder('ap') // Main query table alias
-        .select('*')
+        .select([
+          'ap.*',
+          'cd."checkupDay" as checkupDay',
+          'ch."checkupHour" as checkupHour',
+        ])
         .where('"appointmentId" = :appointmentId', {
           appointmentId: appointmentId,
         })
+        .innerJoin(CheckupDay, 'cd', 'ap."bookingDayId" = cd."dayId" ')
+        .innerJoin(CheckupHour, 'ch', 'ap."bookingHourId" = ch."hourId" ')
         .getRawOne();
-        return res;
+      return res;
     } catch (e) {
       throw e;
     }
