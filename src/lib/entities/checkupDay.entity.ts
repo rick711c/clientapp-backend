@@ -10,4 +10,7 @@ export class CheckupDay {
 
     @Column({ name: 'clinicId' })
     clinicId: string;
+
+    @Column({default: false})
+    isDisabled: boolean;
 }

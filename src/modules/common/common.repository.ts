@@ -21,8 +21,8 @@ export class CommonRepository {
     try {
       return this.clinicRepo
         .createQueryBuilder()
-        .select(`address`)
-        .where('clinicId = :clinicId', { clinicId })
+        .select(`"address"`)
+        .where('"clinicId" = :clinicId', { clinicId })
         .getRawOne();
     } catch (err) {
       throw err;
@@ -34,8 +34,8 @@ export class CommonRepository {
     try {
       const res = await this.patientRepo
         .createQueryBuilder()
-        .select(['fullname', 'age', 'gender'])
-        .where('patientId = :patientId', { patientId })
+        .select(['"fullname"', '"age"', '"gender"'])
+        .where('"patientId" = :patientId', { patientId })
         .getRawOne();
       return res;
     } catch (err) {
@@ -53,6 +53,5 @@ export class CommonRepository {
       throw err;
     }
   }
-
 
 }

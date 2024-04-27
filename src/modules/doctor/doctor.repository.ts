@@ -25,8 +25,8 @@ export class DoctorRepository {
         .select([
           'd."doctorId"',
           'd."fullname"',
-          'd"specialization"',
-          'd"email"',
+          'd."specialization"',
+          'd."email"',
           'd."experience"',
           'd."education"',
           'd."certifications"',
