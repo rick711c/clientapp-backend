@@ -57,13 +57,13 @@ export class UserRepository {
       );
     }
     try {
-      const query = this.repository.createQueryBuilder('u').select("u.userId");
+      const query = this.repository.createQueryBuilder('u').select('u."userId" as "userId"');
 
       if (input.username) {
-        query.where('"username" = :username', { username: input.username });
+        query.where('u."username" = :username', { username: input.username });
       }
       if (input.phoneNo) {
-        query.where('"phoneNumber" = :phoneNo', { phoneNo: input.phoneNo });
+        query.where('u."phoneNumber" = :phoneNo', { phoneNo: input.phoneNo });
       }
       const res = await query.getRawOne();
       return res?.userId?res.userId:null;
