@@ -43,8 +43,13 @@ export class AppointmentService {
 
   async getAppointmentList(userId: string) {
     try {
-      const res = await this.repo.getAppointmentList(userId);
-      return res;
+      let appointmentList:any[]=[];
+      const appointmentIds = await this.repo.getAppointmentIdList(userId);
+      for(let i = 0; i < appointmentIds.length; i++) {
+        const appointmentDetails = await this.getAppointmentDetails(appointmentIds[i].appointmentId);
+        appointmentList.push(appointmentDetails);
+      }
+      return appointmentList;
     } catch (e) {
       throw e;
     }
@@ -54,9 +59,9 @@ export class AppointmentService {
     try {
 
       const appointmentDetails = await this.repo.getAppointmentDetails(appointmentId);
-      const doctorInfo = await this.commonService.getDoctorBasicInfo(
-        appointmentDetails.doctorId,
-      );
+      // const doctorInfo = await this.commonService.getDoctorBasicInfo(
+      //   appointmentDetails.doctorId,
+      // );
       const patientInfo = await this.commonService.getPatientBasicInfo(
         appointmentDetails.patientId,
       );
@@ -64,7 +69,7 @@ export class AppointmentService {
         appointmentDetails.clinicId,
       );
 
-      return{...appointmentDetails, patientInfo,clinicAddress,doctorInfo}
+      return{...appointmentDetails, patientInfo,clinicAddress}
      
     } catch (e) {
       throw e;
