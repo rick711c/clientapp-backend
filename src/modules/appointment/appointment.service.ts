@@ -18,20 +18,9 @@ export class AppointmentService {
     try {
       createAppointmentDto.createdBy = user.userId;
 
-      const doctorInfo = await this.commonService.getDoctorBasicInfo(
-        createAppointmentDto.doctorId,
-      );
-      const patientData = await this.commonService.getPatientBasicInfo(
-        createAppointmentDto.patientId,
-      );
-      const clinicData = await this.commonService.getClinicAddress(
-        createAppointmentDto.clinicId,
-      );
-
       const newAppointment =
         await this.repo.createAppointment(createAppointmentDto);
-
-      return{...newAppointment, patientData,clinicData,doctorInfo}
+      return this.getAppointmentDetails(newAppointment.appointmentId);
     } catch (e) {
       throw e;
     }
@@ -39,12 +28,12 @@ export class AppointmentService {
 
   async getAppointmentList(userId: string) {
     try {
-      let appointmentList:any[]=[];
+      let appointmentList: any[] = [];
       const appointmentIds = await this.repo.getAppointmentIdList(userId);
-      for(let i = 0; i < appointmentIds.length; i++) {
-        const appointmentDetails = await this.getAppointmentDetails(appointmentIds[i].appointmentId);
-        appointmentDetails.createDate = appointmentDetails.createDate.toLocaleDateString();
-        appointmentDetails.bookingDate = appointmentDetails.bookingDate.toLocaleDateString();
+      for (let i = 0; i < appointmentIds.length; i++) {
+        const appointmentDetails = await this.getAppointmentDetails(
+          appointmentIds[i].appointmentId,
+        );
         appointmentList.push(appointmentDetails);
       }
       return appointmentList;
@@ -55,8 +44,8 @@ export class AppointmentService {
 
   async getAppointmentDetails(appointmentId: string) {
     try {
-
-      const appointmentDetails = await this.repo.getAppointmentDetails(appointmentId);
+      const appointmentDetails =
+        await this.repo.getAppointmentDetails(appointmentId);
       // const doctorInfo = await this.commonService.getDoctorBasicInfo(
       //   appointmentDetails.doctorId,
       // );
@@ -67,8 +56,12 @@ export class AppointmentService {
         appointmentDetails.clinicId,
       );
 
-      return{...appointmentDetails, patientData,clinicData}
-     
+      appointmentDetails.createDate =
+        appointmentDetails.createDate.toLocaleDateString();
+      appointmentDetails.bookingDate =
+        appointmentDetails.bookingDate.toLocaleDateString();
+
+      return { ...appointmentDetails, patientData, clinicData };
     } catch (e) {
       throw e;
     }
