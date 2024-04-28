@@ -79,15 +79,5 @@ export class ClinicRepository {
     }
   }
 
-  async getClinicDetails(clinicId: string) {
-    try {
-      return this.repository
-        .createQueryBuilder()
-        .select('*')
-        .where('clinicId = :clinicId', { clinicId: clinicId })
-        .getRawOne();
-    } catch (err) {
-      throw err;
-    }
-  }
+  
 }

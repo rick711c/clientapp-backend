@@ -2,10 +2,6 @@ import { CreateAppointmentDto } from './dto/createAppointment.dto';
 import { AppointmentRepository } from './appointment.repository';
 import { Injectable } from '@nestjs/common';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
-import { create } from 'domain';
-import { DoctorService } from '../doctor/doctor.service';
-import { PatientService } from '../patient/patient.service';
-import { ClinicService } from '../clinic/clinic.service';
 import { CommonService } from '../common/common.service';
 
 @Injectable()
@@ -25,17 +21,17 @@ export class AppointmentService {
       const doctorInfo = await this.commonService.getDoctorBasicInfo(
         createAppointmentDto.doctorId,
       );
-      const patientInfo = await this.commonService.getPatientBasicInfo(
+      const patientData = await this.commonService.getPatientBasicInfo(
         createAppointmentDto.patientId,
       );
-      const clinicAddress = await this.commonService.getClinicAddress(
+      const clinicData = await this.commonService.getClinicAddress(
         createAppointmentDto.clinicId,
       );
 
       const newAppointment =
         await this.repo.createAppointment(createAppointmentDto);
 
-      return{...newAppointment, patientInfo,clinicAddress,doctorInfo}
+      return{...newAppointment, patientData,clinicData,doctorInfo}
     } catch (e) {
       throw e;
     }
@@ -47,6 +43,8 @@ export class AppointmentService {
       const appointmentIds = await this.repo.getAppointmentIdList(userId);
       for(let i = 0; i < appointmentIds.length; i++) {
         const appointmentDetails = await this.getAppointmentDetails(appointmentIds[i].appointmentId);
+        appointmentDetails.createDate = appointmentDetails.createDate.toLocaleDateString();
+        appointmentDetails.bookingDate = appointmentDetails.bookingDate.toLocaleDateString();
         appointmentList.push(appointmentDetails);
       }
       return appointmentList;
@@ -62,14 +60,14 @@ export class AppointmentService {
       // const doctorInfo = await this.commonService.getDoctorBasicInfo(
       //   appointmentDetails.doctorId,
       // );
-      const patientInfo = await this.commonService.getPatientBasicInfo(
+      const patientData = await this.commonService.getPatientBasicInfo(
         appointmentDetails.patientId,
       );
-      const clinicAddress = await this.commonService.getClinicAddress(
+      const clinicData = await this.commonService.getClinicDetails(
         appointmentDetails.clinicId,
       );
 
-      return{...appointmentDetails, patientInfo,clinicAddress}
+      return{...appointmentDetails, patientData,clinicData}
      
     } catch (e) {
       throw e;

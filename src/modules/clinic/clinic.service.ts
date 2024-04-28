@@ -8,6 +8,7 @@ import { AvailableSlot, DateWithDayId, HourAndSlot } from 'src/lib/interfaces/in
 import { UtilService } from 'src/lib/utils/util.service';
 import { daysOfWeekArray } from 'src/lib/enums';
 import { json } from 'stream/consumers';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class ClinicService {
@@ -15,6 +16,7 @@ export class ClinicService {
     private repository: ClinicRepository,
     private appointmentService: AppointmentService,
     private utilService: UtilService,
+    private commonService: CommonService
   ) {}
 
   async createClinic(addClinicDto: AddClinicDto) {
@@ -60,9 +62,8 @@ export class ClinicService {
 
   async getClinicDetails(clinicId: string) {
     try {
-      const clinicDetails = await this.repository.getClinicDetails(clinicId);
-      // const checkupDateTime =
-      //   await this.repository.getCheckupDayAndHours(clinicId);
+      const clinicDetails = await this.commonService.getClinicDetails(clinicId);
+     
       return clinicDetails;
     } catch (err) {
       throw err;

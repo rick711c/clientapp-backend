@@ -8,9 +8,10 @@ import { CheckupHour } from 'src/lib/entities/checkupHours.entity';
 import { CheckupDay } from 'src/lib/entities/checkupDay.entity';
 import { AppointmentModule } from '../appointment/appointment.module';
 import { UtilService } from 'src/lib/utils/util.service';
+import { CommonModule } from '../common/common.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Clinic,CheckupHour,CheckupDay]),AppointmentModule],
+  imports: [TypeOrmModule.forFeature([Clinic,CheckupHour,CheckupDay]),AppointmentModule,CommonModule],
   controllers: [ClinicController],
   providers: [ClinicService, ClinicRepository,UtilService],
 })

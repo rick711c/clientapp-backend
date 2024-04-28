@@ -30,4 +30,13 @@ export class CommonService {
       throw err;
     }
   }
+
+  async getClinicDetails(clinicId: string) {
+    try {
+      const res = await this.commonRepo.getClinicDetails(clinicId);
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

@@ -54,4 +54,16 @@ export class CommonRepository {
     }
   }
 
+  async getClinicDetails(clinicId: string) {
+    try {
+      return this.clinicRepo
+        .createQueryBuilder()
+        .select('*')
+        .where('"clinicId" = :clinicId', { clinicId: clinicId })
+        .getRawOne();
+    } catch (err) {
+      throw err;
+    }
+  }
+
 }

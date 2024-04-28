@@ -44,8 +44,8 @@ export class AppointmentRepository {
         .createQueryBuilder('ap') // Main query table alias
         .select([
           'ap.*',
-          'cd."checkupDay" as checkupDay',
-          'ch."checkupHour" as checkupHour',
+          'cd."checkupDay" as "checkupDay"',
+          'ch."checkupHour" as "checkupHour"',
         ])
         .where('"appointmentId" = :appointmentId', {
           appointmentId: appointmentId,
