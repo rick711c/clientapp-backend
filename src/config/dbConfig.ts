@@ -33,6 +33,6 @@ export const dbConfig: TypeOrmModuleOptions = {
     CheckupDay,
     Doctor
   ],
-  synchronize: true,
+  synchronize: false,
   logging: true,
 };

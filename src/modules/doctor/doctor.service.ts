@@ -22,4 +22,8 @@ export class DoctorService {
     }
   }
 
+  async dashBoard(doctorId: string) {
+    
+  }
+
 }
