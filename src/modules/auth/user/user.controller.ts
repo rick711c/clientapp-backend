@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/cerateUser.dto';
 import { LoginDto } from './dto/login.dto';
 import { Public } from 'src/decorators/public.decorator';
+import { UpdateUserDto } from './dto/updateUser.dto';
+import { CurrentUser } from 'src/decorators/currentUser.decorator';
+import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
 
 @Controller('/user')
 
@@ -49,5 +52,14 @@ export class UserController {
         refreshToken,
       );
     } catch (err) {}
+  }
+
+  @Patch()
+  async updateUser(@Body() updateUserDto: UpdateUserDto, @CurrentUser() user:CurrentUserInfo){
+    try{
+      return this.userService.updateUser(updateUserDto,user);
+    }catch (err){
+      throw err;
+    }
   }
 }
