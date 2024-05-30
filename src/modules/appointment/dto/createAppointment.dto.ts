@@ -26,7 +26,7 @@ export class CreateAppointmentDto {
 
   @IsOptional()
   @IsDate()
-  @Transform(({ value }) => new Date(value))
+  @Transform(({ value }) => value ? new Date(value) : value)
   bookingDate: Date;
 
   @IsString()

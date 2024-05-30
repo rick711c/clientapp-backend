@@ -35,7 +35,7 @@ export class AppointmentController {
   }
 
   @Get('/list')
-  async getAppointmentList(@CurrentUser()user:any) {
+  async getAppointmentList(@CurrentUser()user:CurrentUserInfo) {
     try {
       return this.service.getAppointmentList(user.userId)
     } catch (e) {
