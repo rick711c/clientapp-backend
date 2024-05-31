@@ -4,6 +4,7 @@ import { User } from 'src/lib/entities/user.entity';
 import { CreateUserDto } from './dto/cerateUser.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ErrorMessages } from 'src/lib/enums/errorMessages.enum';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 export class UserRepository {
   constructor(
@@ -68,6 +69,21 @@ export class UserRepository {
       const res = await query.getRawOne();
       return res?.userId?res.userId:null;
     } catch (err) {
+      throw err;
+    }
+  }
+
+  async updateUser(updateUserDto: UpdateUserDto){
+    try{
+      const res = await this.repository
+      .createQueryBuilder()
+      .update(User)
+      .set({...updateUserDto})
+      .where('userId = :userId',{userId:updateUserDto.userId})
+      .execute();
+
+      return res?1:0;
+    }catch (err){
       throw err;
     }
   }

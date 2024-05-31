@@ -2,6 +2,11 @@ import { IsUUID, IsString, IsOptional, IsEmail, IsEnum } from 'class-validator';
 import { UserRolesEnum } from 'src/lib/enums';
 
 export class CreateUserDto {
+
+  @IsOptional()
+  @IsString()
+  userId:string;
+
   @IsOptional()
   @IsString()
   username: string;
@@ -28,8 +33,4 @@ export class CreateUserDto {
   @IsEnum(UserRolesEnum)
   role: string;
 
-  constructor() {
-    this.fullName = this.fullName ? this.fullName : 'Guest';
-    this.role = this.role ? this.role : UserRolesEnum.CUSTOMER;
-  }
 }

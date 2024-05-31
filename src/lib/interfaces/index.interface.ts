@@ -4,8 +4,7 @@ import { UUID } from 'crypto';
 export interface CurrentUserInfo {
   userId: UUID;
   username: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   phoneNumber: string;
   email: string;
   roles: {
@@ -15,41 +14,40 @@ export interface CurrentUserInfo {
   }[];
 }
 
-
-export interface ClinicAddress{
-    address: string;
-    city: string;
-    pincode: string;
-    state: string;
-    country: string;
-    landmark: string;
+export interface ClinicAddress {
+  address: string;
+  city: string;
+  pincode: string;
+  state: string;
+  country: string;
+  landmark: string;
 }
 
-export interface AvailableSlot{
-  dayId:string;
+export interface AvailableSlot {
+  dayId: string;
   date: string;
   hourAndSlot: HourAndSlot[];
 }
 
-export interface HourAndSlot{
+export interface HourAndSlot {
   hourId: string;
-  hour:string;
-  availableSlots:number
+  hour: string;
+  availableSlots: number;
 }
 
-export interface DateWithDayId{
-  date:string;
-  dayId:string;
+export interface DateWithDayId {
+  date: string;
+  dayId: string;
 }
 
-export interface DoctorInfo{
-  fullname:string;
-  specialization:string,
-  education:string
+export interface DoctorInfo {
+  fullname: string;
+  specialization: string;
+  education: string;
 }
 
-export interface PatientInfo{
-  fullname:string,
-  age:number,
-  gender:string
+export interface PatientInfo {
+  fullname: string;
+  age: number;
+  gender: string;
 }

@@ -56,10 +56,10 @@ export class AppointmentService {
         appointmentDetails.clinicId,
       );
 
-      appointmentDetails.createDate =
-        appointmentDetails.createDate.toLocaleDateString();
-      appointmentDetails.bookingDate =
-        appointmentDetails.bookingDate.toLocaleDateString();
+      // appointmentDetails.createDate =
+      //   appointmentDetails.createDate.toLocaleDateString();
+      // appointmentDetails.bookingDate =
+      //   appointmentDetails.bookingDate.toLocaleDateString();
 
       return { ...appointmentDetails, patientData, clinicData };
     } catch (e) {

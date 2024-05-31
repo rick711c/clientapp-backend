@@ -11,6 +11,10 @@ import { UserRole } from 'src/lib/entities/userRole.entity';
 import { LoginMethod, UserRolesEnum } from 'src/lib/enums';
 import { Public } from 'src/decorators/public.decorator';
 import { OTPService } from '../otp/otp.service';
+import { UpdateUserDto } from './dto/updateUser.dto';
+import { UserInfo } from 'os';
+import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
+import { Role } from 'src/lib/entities/role.entity';
 
 @Injectable()
 export class UserService {
@@ -55,6 +59,9 @@ export class UserService {
           );
           createUserDto.username = createUserDto.username || createUserDto.email;
         }
+
+        createUserDto.fullName = createUserDto.fullName || "Guest";
+        createUserDto.role =  createUserDto.role || UserRolesEnum.CUSTOMER;
 
         const newUser = await this.userRepository.registerUser(createUserDto);
         const addRole = await this.userRoleService.addUserRoleByRoleName(
@@ -194,6 +201,18 @@ export class UserService {
         await this.tokenService.generateAccessToken(userDetails);
       return accessToken;
     } catch (err) {
+      throw err;
+    }
+  }
+
+  async updateUser(updateUserDto: UpdateUserDto, user:CurrentUserInfo){
+    try{
+      updateUserDto.userId = user.userId;
+      const res = await this.userRepository.updateUser(updateUserDto);
+      if(res==1){
+        return updateUserDto; 
+      }
+    }catch (err){
       throw err;
     }
   }
