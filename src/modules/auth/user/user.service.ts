@@ -15,6 +15,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserInfo } from 'os';
 import { CurrentUserInfo } from 'src/lib/interfaces/index.interface';
 import { Role } from 'src/lib/entities/role.entity';
+import { CommonUserService } from '../shared/userCommon/user-common.service';
 
 @Injectable()
 export class UserService {
@@ -24,6 +25,7 @@ export class UserService {
     private readonly utilService: UtilService,
     private readonly tokenService: TokenService,
     private readonly otpService: OTPService,
+    private readonly commonUserService: CommonUserService
   ) {}
 
   async registerUser(createUserDto: CreateUserDto) {
@@ -60,7 +62,7 @@ export class UserService {
           createUserDto.username = createUserDto.username || createUserDto.email;
         }
 
-        createUserDto.fullName = createUserDto.fullName || "Guest";
+        createUserDto.fullname = createUserDto.fullname || "Guest";
         createUserDto.role =  createUserDto.role || UserRolesEnum.CUSTOMER;
 
         const newUser = await this.userRepository.registerUser(createUserDto);
@@ -78,7 +80,7 @@ export class UserService {
 
   async getUserDetailsById(userId: string) {
     try {
-      const userDetails = await this.userRepository.getUserDetailsById(userId);
+      const userDetails = await this.commonUserService.getUserDetailsById(userId);
       const userRoles = await this.userRoleService.getUserRoles(
         userDetails.userId,
       );
@@ -207,7 +209,6 @@ export class UserService {
 
   async updateUser(updateUserDto: UpdateUserDto, user:CurrentUserInfo){
     try{
-      updateUserDto.userId = user.userId;
       const res = await this.userRepository.updateUser(updateUserDto);
       if(res==1){
         return updateUserDto; 

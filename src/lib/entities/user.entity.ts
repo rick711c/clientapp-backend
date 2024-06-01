@@ -11,8 +11,8 @@ export class User {
   @Column({ name: 'enPassword', nullable: true })
   enPassword: string;
 
-  @Column({ name: 'fullName' })
-  fullName: string;
+  @Column({ name: 'fullname', default:"Guest" })
+  fullname: string;
 
   @Column({ name: 'phoneNumber', nullable: true })
   phoneNumber: string;

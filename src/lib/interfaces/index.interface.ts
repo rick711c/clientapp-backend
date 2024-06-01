@@ -4,7 +4,7 @@ import { UUID } from 'crypto';
 export interface CurrentUserInfo {
   userId: UUID;
   username: string;
-  fullName: string;
+  fullname: string;
   phoneNumber: string;
   email: string;
   roles: {

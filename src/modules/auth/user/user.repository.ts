@@ -75,10 +75,14 @@ export class UserRepository {
 
   async updateUser(updateUserDto: UpdateUserDto){
     try{
+
+      const newData = updateUserDto;
+      delete newData.userId;
+
       const res = await this.repository
       .createQueryBuilder()
       .update(User)
-      .set({...updateUserDto})
+      .set({...newData})
       .where('userId = :userId',{userId:updateUserDto.userId})
       .execute();
 

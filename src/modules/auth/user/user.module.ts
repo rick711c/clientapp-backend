@@ -10,9 +10,10 @@ import { UserRoleModule } from "../userRole/userRole.module";
 import { UtilService } from "src/lib/utils/util.service";
 import { TokenModule } from "../authToken/token.module";
 import { OTPModule } from "../otp/otp.module";
+import { CommonUserModule } from "../shared/userCommon/user-common.module";
 
 @Module({
-    imports:[ TypeOrmModule.forFeature([User]),UserRoleModule,TokenModule,OTPModule],
+    imports:[ TypeOrmModule.forFeature([User]),UserRoleModule,TokenModule,OTPModule,CommonUserModule],
     controllers:[UserController],
     providers:[UserService,UserRepository,UtilService]
 })

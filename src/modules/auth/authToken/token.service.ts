@@ -4,7 +4,6 @@ import { Injectable } from '@nestjs/common';
 import { TokenRepository } from './token.repository';
 import * as jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
-import { JwtPayloadInterface } from './interface/jwtPayload.interface';
 
 @Injectable()
 export class TokenService {
@@ -12,23 +11,23 @@ export class TokenService {
 
   async generateAccessToken(userDetails: any) {
     try {
-      const user: JwtPayloadInterface ={
+      const jwtPayload ={
           userId: userDetails.userId,
-          username: userDetails.username,
-          firstName: userDetails.firstName,
-          lastName: userDetails.lastName,
-          phoneNumber: userDetails.phoneNumber,
-          email: userDetails.email,
-          roles: userDetails.roles
+          // username: userDetails.username,
+          // firstName: userDetails.firstName,
+          // lastName: userDetails.lastName,
+          // phoneNumber: userDetails.phoneNumber,
+          // email: userDetails.email,
+          // roles: userDetails.roles
       }
       // Generate access token
-      const accessToken = jwt.sign(user, 'your_access_token_secret', {
+      const accessToken = jwt.sign(jwtPayload, 'your_access_token_secret', {
         expiresIn: '10 days',
       });
 
       //save metadata
       const accessTokenDto = new SaveAccessTokenDto();
-      accessTokenDto.userId = user.userId;
+      accessTokenDto.userId = jwtPayload.userId;
       const now = new Date();
       accessTokenDto.expireDate = new Date(now.getTime() + 240 * 60 * 60 * 1000); 
       await this.tokenRepository.saveAccessTokenMetadata(accessTokenDto);
@@ -71,6 +70,8 @@ export class TokenService {
         throw err;
     }
   }
+
+  
 
   async validateJwtToken(token: string, secretKey?: string): Promise<any> {
     try {
