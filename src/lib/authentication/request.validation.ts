@@ -1,11 +1,15 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ErrorMessages } from '../enums/errorMessages.enum';
 import { TokenService } from 'src/modules/auth/authToken/token.service';
+import { CommonUserService } from 'src/modules/auth/shared/userCommon/user-common.service';
+import { CommonRoleService } from 'src/modules/auth/shared/roleCommon/role-common.service';
 
 
 export class RequestValidation {
     constructor(
-        private readonly tokenService: TokenService
+        private readonly tokenService: TokenService,
+
+
     ){}
   async validate(header: any) {
     const authHeader = header.authorization;

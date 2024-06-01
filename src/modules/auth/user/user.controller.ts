@@ -62,4 +62,13 @@ export class UserController {
       throw err;
     }
   }
+
+  @Get('/userinfo')
+  async getUserInfo(userId:string){
+    try{
+      return this.userService.getUserDetailsById(userId);
+    }catch (err){
+      throw err;
+    }
+  }
 }
