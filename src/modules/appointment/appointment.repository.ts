@@ -24,14 +24,21 @@ export class AppointmentRepository {
     }
   }
 
-  async getAppointmentIdList(userId: string) {
+  async getAppointmentIdList(userId: string, doctorId:string) {
     try {
-      const res = await this.repo
+      const query =  this.repo
         .createQueryBuilder()
         .select('"appointmentId"')
-        .where('"createdBy" = :userId', { userId })
-        .andWhere('"isDeleted" = :isDeleted', { isDeleted: 0 })
-        .getRawMany();
+        // .where('"createdBy" = :userId', { userId })
+        .where('"isDeleted" = :isDeleted', { isDeleted: 0 });
+
+        if(userId){
+          query.andWhere('"createdBy" = :userId', { userId });
+        }
+        if(doctorId){
+          query.andWhere('"doctorId" = :doctorId', { doctorId })
+        }
+        const res = await query.getRawMany();
       return res;
     } catch (e) {
       throw e;
