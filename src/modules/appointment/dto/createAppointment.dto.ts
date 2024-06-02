@@ -1,11 +1,22 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsDate, IsEnum, IsIn, IsInt, IsJSON, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsEnum,
+  IsIn,
+  IsInt,
+  IsJSON,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { UUID } from 'crypto';
 import { DaysOfWeek } from 'src/lib/enums';
 import { DoctorInfo, PatientInfo } from 'src/lib/interfaces/index.interface';
 
 export class CreateAppointmentDto {
-
   @IsString()
   doctorId: UUID;
 
@@ -14,7 +25,7 @@ export class CreateAppointmentDto {
 
   @IsOptional()
   @IsUUID()
-  createdBy:UUID;
+  createdBy: UUID;
 
   @IsOptional()
   @IsDate()
@@ -26,18 +37,18 @@ export class CreateAppointmentDto {
 
   @IsOptional()
   @IsDate()
-  @Transform(({ value }) => value ? new Date(value) : value)
+  @Transform(({ value }) => (value ? new Date(value) : value))
   bookingDate: Date;
 
   @IsString()
   clinicId: UUID;
 
   @IsString()
-  bookingDayId:UUID;
+  bookingDayId: UUID;
 
-  @IsNotEmpty({message: 'required field'})
+  @IsNotEmpty({ message: 'required field' })
   @IsUUID()
-  bookingHourId:UUID;
+  bookingHourId: UUID;
 
   @IsBoolean()
   isDeleted: boolean;
@@ -50,12 +61,7 @@ export class CreateAppointmentDto {
   @IsJSON()
   patientInfo: PatientInfo;
 
-  // @IsOptional()
-  // @IsString()
-  // clinicAddress: string;
-
-  constructor(){
-    this.bookingDate = this.bookingDate?this.bookingDate:new Date()
-     this.bookingDate.setHours(0,0,0,0);
-  }
+  @IsOptional()
+  @IsNumber()
+  status: number;
 }

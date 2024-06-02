@@ -61,14 +61,17 @@ export class AppointmentRepository {
 
   async updateAppointment(updateAppointmentDto: UpdateAppointmentDto) {
     try {
-      const appointmentDetails = await this.getAppointmentDetails(
-        updateAppointmentDto.appointmentId,
-      );
-      const updateAppointment = {
-        ...appointmentDetails,
-        ...updateAppointmentDto,
-      };
-      return this.repo.save(updateAppointment);
+      const appointmentId = updateAppointmentDto.appointmentId;
+      delete updateAppointmentDto.appointmentId;
+
+      const res = await this.repo
+        .createQueryBuilder()
+        .update(Appointment)
+        .set({ ...updateAppointmentDto })
+        .where('appointmentId = :appointmentId', { appointmentId })
+        .execute();
+
+      return res ? 1 : 0;
     } catch (e) {
       throw e;
     }

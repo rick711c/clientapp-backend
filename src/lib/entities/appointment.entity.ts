@@ -3,6 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  Collection,
 } from 'typeorm';
 import { DoctorInfo, PatientInfo } from '../interfaces/index.interface';
 
@@ -46,6 +47,6 @@ export class Appointment {
   @Column({ name: 'isDeleted', default: false })
   isDeleted: boolean;
 
-  @Column({ name: 'isCompleted', default: false })
-  isCompleted: boolean;
+  @Column({name:'status' ,default:0})
+  status:number
 }

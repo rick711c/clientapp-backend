@@ -3,6 +3,8 @@ import { AppointmentRepository } from './appointment.repository';
 import { Injectable } from '@nestjs/common';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
 import { CommonService } from '../common/common.service';
+import { create } from 'domain';
+import { AppointmentStatus } from 'src/lib/enums';
 
 @Injectable()
 export class AppointmentService {
@@ -17,6 +19,11 @@ export class AppointmentService {
   ) {
     try {
       createAppointmentDto.createdBy = user.userId;
+      createAppointmentDto.status = AppointmentStatus.Upcoming;
+      createAppointmentDto.bookingDate = createAppointmentDto.bookingDate
+        ? createAppointmentDto.bookingDate
+        : new Date();
+      createAppointmentDto.bookingDate.setHours(0, 0, 0, 0);
 
       const newAppointment =
         await this.repo.createAppointment(createAppointmentDto);
