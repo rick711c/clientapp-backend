@@ -18,9 +18,9 @@ export class ClinicController {
   }
 
   @Get('/list')
-  async getClinicList() {
+  async getClinicList(@Query('doctorId')doctorId: string) {
     try {
-      return this.service.getClinicList();
+      return this.service.getClinicList(doctorId);
     } catch (err) {
       throw err;
     }

@@ -26,12 +26,12 @@ export class ClinicRepository {
     }
   }
 
-  async getClinicList() {
+  async getClinicList(doctorId:string) {
     try {
       const res = await this.repository
         .createQueryBuilder()
         .select('*')
-        //.where('createdBy = :createdBy',{createdBy: userId})
+        .where('"doctorId" = :doctorId',{doctorId})
         .getRawMany();
       return res;
     } catch (err) {

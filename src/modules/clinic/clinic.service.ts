@@ -28,9 +28,9 @@ export class ClinicService {
     }
   }
 
-  async getClinicList() {
+  async getClinicList(doctorId:string) {
     try {
-      return this.repository.getClinicList();
+      return this.repository.getClinicList(doctorId);
     } catch (err) {
       throw err;
     }
