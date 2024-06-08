@@ -24,7 +24,7 @@ export class AppointmentRepository {
     }
   }
 
-  async getAppointmentIdList(userId: string, doctorId:string,clinicId:string) {
+  async getAppointmentIdList(patientId: string, doctorId:string,clinicId:string,status:number) {
     try {
       const query =  this.repo
         .createQueryBuilder()
@@ -32,14 +32,18 @@ export class AppointmentRepository {
         // .where('"createdBy" = :userId', { userId })
         .where('"isDeleted" = :isDeleted', { isDeleted: 0 });
 
-        if(userId){
-          query.andWhere('"createdBy" = :userId', { userId });
+        if(patientId){
+          query.andWhere('"patientId" = :patientId', { patientId });
         }
         if(doctorId){
           query.andWhere('"doctorId" = :doctorId', { doctorId })
         }
         if(clinicId){
           query.andWhere('"clinicId" = :clinicId',{ clinicId})
+        }
+        if(status){
+          query.andWhere('"status" = :status',{ status})
+
         }
         const res = await query.getRawMany();
       return res;

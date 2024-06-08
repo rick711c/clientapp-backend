@@ -38,9 +38,10 @@ export class AppointmentController {
   async getAppointmentList(@Query() input: any) {
     try {
       return this.service.getAppointmentList(
-        input.userId,
+        input.patientId,
         input.doctorId,
         input.clinicId,
+        input.status
       );
     } catch (e) {
       throw e;
