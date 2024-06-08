@@ -33,12 +33,12 @@ export class AppointmentService {
     }
   }
 
-  async getAppointmentList(userId: string,doctorId:string) {
+  async getAppointmentList(userId: string,doctorId:string,clinicId) {
     try {
 
       let appointmentList: any[] = [];
 
-      const appointmentIds = await this.repo.getAppointmentIdList(userId,doctorId);
+      const appointmentIds = await this.repo.getAppointmentIdList(userId,doctorId,clinicId);
       for (let i = 0; i < appointmentIds.length; i++) {
         const appointmentDetails = await this.getAppointmentDetails(
           appointmentIds[i].appointmentId,

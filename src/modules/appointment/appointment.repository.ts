@@ -24,7 +24,7 @@ export class AppointmentRepository {
     }
   }
 
-  async getAppointmentIdList(userId: string, doctorId:string) {
+  async getAppointmentIdList(userId: string, doctorId:string,clinicId:string) {
     try {
       const query =  this.repo
         .createQueryBuilder()
@@ -37,6 +37,9 @@ export class AppointmentRepository {
         }
         if(doctorId){
           query.andWhere('"doctorId" = :doctorId', { doctorId })
+        }
+        if(clinicId){
+          query.andWhere('"clinicId" = :clinicId',{ clinicId})
         }
         const res = await query.getRawMany();
       return res;

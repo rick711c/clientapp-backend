@@ -27,17 +27,21 @@ export class AppointmentController {
     @CurrentUser() user: CurrentUserInfo,
   ) {
     try {
-      console.log(createAppointmentDto)
-      return this.service.createAppointment(createAppointmentDto,user);
+      console.log(createAppointmentDto);
+      return this.service.createAppointment(createAppointmentDto, user);
     } catch (e) {
       throw e;
     }
   }
 
   @Get('/list')
-  async getAppointmentList(@Query()input:any) {
+  async getAppointmentList(@Query() input: any) {
     try {
-      return this.service.getAppointmentList(input.userId,input.doctorId)
+      return this.service.getAppointmentList(
+        input.userId,
+        input.doctorId,
+        input.clinicId,
+      );
     } catch (e) {
       throw e;
     }
@@ -60,6 +64,4 @@ export class AppointmentController {
       throw e;
     }
   }
-
-  
 }
