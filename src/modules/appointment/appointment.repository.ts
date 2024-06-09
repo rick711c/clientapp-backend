@@ -43,8 +43,8 @@ export class AppointmentRepository {
         }
         if(status){
           query.andWhere('"status" = :status',{ status})
-
         }
+        query.orderBy('created')
         const res = await query.getRawMany();
       return res;
     } catch (e) {
